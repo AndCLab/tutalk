@@ -121,13 +121,13 @@ const MessageInput = ({ conversation = null }) => {
 
             {/* Message Input and Send Button */}
             <div className="order-1 px-3 xs:p-0 min-w-[220px] xs:order-2 flex-1 relative">
-                <div className="flex ">
+                <div className="flex">
                     <NewMessageInput 
                         value={newMessage}
                         onSend={onSendClick}
                         onChange={(ev) => setNewMessage(ev.target.value)}
                     />
-                    <button onClick={onSendClick} disabled={messageSending} className="hover:bg-emerald-700 hover:border-emerald-700 border-emerald-800 bg-emerald-800 btn btn-info rounded-1-none hover:text-green-800">
+                    <button onClick={onSendClick} disabled={messageSending} className="hover:bg-emerald-700 hover:border-emerald-700 border-emerald-800 bg-emerald-800 btn btn-info rounded-1-none hover:text-green-800 ml-3">
                         
                         <PaperAirplaneIcon className="w-6 fill-gray-100" />
                         <span className="hidden sm:inline text-gray-100">Send</span>
