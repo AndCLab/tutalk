@@ -13,7 +13,7 @@ const MessageItem = ({ message, attachmentClick }) => {
             <UserAvatar user={message.sender} />
             <div className="chat-header">
                 {message.sender_id !== currentUser.id ? message.sender.name : ""}
-                <time className="text-xs opacity-50 ml-2">
+                <time className="text-xs opacity-70 text-gray-800 ml-2">
                     {formatMessageDateLong(message.created_at)}
                 </time>
             </div>

@@ -32,7 +32,7 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                             {isImage(attachment) && (
                                 <img
                                     src={attachment.url}
-                                    className="object-contain aspect-square"
+                                    className="object-contain aspect-square bg-[#00b5fc]"
                                 />
                             )}
 
