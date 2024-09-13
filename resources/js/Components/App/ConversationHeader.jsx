@@ -8,7 +8,7 @@ const ConversationHeader = ({ selectedConversation }) => {
     return (
         <>
             {selectedConversation && (
-                <div className="p-3 flex justify-between items-center border-b border-emerald-900 bg-emerald-900">
+                <div className="p-3 flex justify-between items-center border-b-2 border-emerald-900 bg-emerald-900">
                     <div className="flex items-center gap-3">
                         <Link href={route("dashboard")} className="inline-block sm:hidden">
                             <ArrowLeftIcon className="w-6" />
