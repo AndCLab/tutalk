@@ -119,20 +119,16 @@ const ChatLayout = ({ children }) => {
         <>
         <div className="flex-1 w-full flex overflow-hidden">
 
-            <div className={`transition-all w-full sm:w-[220px] md:w-[360px] bg-emerald-950 flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""}`}>
-                <div className="flex items-center justify-between py-2 px-3 text-xl font-medium text-gray-100">
-                    Chats
-                    <div className="tooltip tooltip-left" data-tip="Create new Group">
+            <div className={`transition-all w-full sm:w-[220px] md:w-[360px] bg-emerald-900 border-r-2 border-r-emerald-950 flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""}`}>
+                <div className="flex p-3">
+                    <TextInput onKeyUp={onSearch} placeholder="Filter users and groups" className="w-full h-8"/>
+                    <div className="tooltip tooltip-left pt-1" data-tip="Create new Group">
                         <button className="text-gray-100 hover:text-gray-400">
                             <PencilSquareIcon className="w-4 h-4 inline-block ml-2"/>
                         </button>
                     </div>
                 </div>
-
-                <div className="p-3">
-                    <TextInput onKeyUp={onSearch} placeholder="Filter users and groups" className="w-full"/>
-                </div>
-                <div className="flex-1 overflow-auto bg-emerald-900 border-2 border-emerald-900 ">
+                <div className="flex-1 overflow-auto bg-emerald-800 border-2 border-emerald-900 ">
                     {sortedConversations && sortedConversations.map((conversation) => (
                         <ConversationItem 
                             key={`${conversation.is_group ? "group_" : "user_"}${conversation.id}`}
