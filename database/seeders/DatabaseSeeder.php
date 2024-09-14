@@ -18,15 +18,57 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
+            'fname' => 'John',
+            'lname' => 'Doe',
             'name' => 'John Doe',
+            'is_stepper' => 0,
+            'address' => 'address',
+            'zip_code' => '6015',
+            'user_type' => 'tutee',
             'email' => 'john@example.com',
             'password' => bcrypt('password'),
+            'phone_prefix' => '+63',
+            'phone_number' => '9582935679',
         ]);
         
         User::factory()->create([
+            'fname' => 'Jane',
+            'lname' => 'Doe',
             'name' => 'Jane Doe',
+            'is_stepper' => 0,
+            'address' => 'address',
+            'zip_code' => '6015',
+            'user_type' => 'tutor',
             'email' => 'jane@example.com',
             'password' => bcrypt('password'),
+            'phone_prefix' => '+63',
+            'phone_number' => '9584638379',
+        ]);
+
+        User::factory()->create([
+            'fname' => 'Tutee',
+            'lname' => 'Example',
+            'name' => 'Tutee Example',
+            'is_stepper' => 0,
+            'user_type' => 'tutee',
+            'email' => 'tutee@example.com',
+            'address' => 'address',
+            'zip_code' => '6015',
+            'phone_prefix' => '+63',
+            'phone_number' => '9582938379',
+        ]);
+
+        User::factory()->create([
+            'fname' => 'Tutor',
+            'lname' => 'Example',
+            'name' => 'Tutor Example',
+            'is_stepper' => 0,
+            'user_type' => 'tutor',
+            'email' => 'tutor@example.com',
+            'address' => 'address',
+            'zip_code' => '6015',
+            'phone_prefix' => '+63',
+            'phone_number' => '9576238479',
         ]);
 
         User::factory(10)->create();

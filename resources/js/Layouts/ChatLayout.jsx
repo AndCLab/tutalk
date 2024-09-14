@@ -128,7 +128,7 @@ const ChatLayout = ({ children }) => {
                         </button>
                     </div>
                 </div>
-                <div className="flex-1 overflow-auto bg-emerald-800 border-2 border-emerald-900 ">
+                <div className="flex-1 overflow-auto bg-emerald-800 border-2 border-emerald-900">
                     {sortedConversations && sortedConversations.map((conversation) => (
                         <ConversationItem 
                             key={`${conversation.is_group ? "group_" : "user_"}${conversation.id}`}
