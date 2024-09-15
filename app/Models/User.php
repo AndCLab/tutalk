@@ -49,6 +49,21 @@ class User extends Authenticatable
         ];
     }
 
+    public function tutors()
+    {
+        return $this->hasMany(Tutor::class);
+    }
+
+    public function tutees()
+    {
+        return $this->hasMany(Tutee::class);
+    }
+
+    public function fields()
+    {
+        return $this->hasMany(Fields::class);
+    }
+
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_users');
