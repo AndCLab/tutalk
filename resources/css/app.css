@@ -96,13 +96,29 @@
 
 .chat-message-content pre {
     padding: 1rem;
-    white-space: no-wrap;
+    white-space: nowrap;
     overflow-x: auto;
     font-style: italic;
     background-color: rgba(0,0,0,0.1);
-    border-radius: 0.5 rem;
+    border-radius: 0.5rem;
 }
 
 .chat-message-content pre code {
     background-color: transparent;
 }
+
+.chat-image img {
+    border: none;
+    border-radius: 2%;
+    background: none;
+    background-color: transparent;
+    padding: 0;
+    object-fit: cover;    
+    width: 100%;          
+    height: auto;           
+}
+  
+.chat-image {
+    margin: 0;
+    padding: 0;
+  }
