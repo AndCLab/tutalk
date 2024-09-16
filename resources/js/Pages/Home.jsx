@@ -135,7 +135,7 @@ function Home({ selectedConversation = null, messages = null }) {
                     />
 
                     {/* Messages || Main Scrollable Area */}
-                    <div ref={messagesCtrRef} className="flex-1 overflow-y-auto p-5">
+                    <div ref={messagesCtrRef} className="flex-1 overflow-y-auto p-5" >
                         {/* No messages section */}
                         {localMessages.length === 0 && (
                         <div className="flex justify-center items-center h-full">
