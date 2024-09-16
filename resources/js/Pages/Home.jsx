@@ -139,8 +139,8 @@ function Home({ selectedConversation = null, messages = null }) {
                         {/* No messages section */}
                         {localMessages.length === 0 && (
                         <div className="flex justify-center items-center h-full">
-                            <div className="text-lg text-slate-200">
-                                No messages found
+                            <div className="text-lg text-slate-400">
+                                Send a message to start a conversation
                             </div>
                         </div>
                         )}
