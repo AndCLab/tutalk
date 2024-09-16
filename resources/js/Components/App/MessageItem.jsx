@@ -36,7 +36,7 @@ const MessageItem = ({ message, attachmentClick }) => {
                 <div className={`chat-bubble relative ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-xl`}>
                     <div className="chat-message">
                         {/* Render text content */}
-                        <div className="chat-message-content">
+                        <div className="chat-message-content m-w-full">
                             <ReactMarkdown>{message.message}</ReactMarkdown>
                         </div>
                     </div>
@@ -45,7 +45,7 @@ const MessageItem = ({ message, attachmentClick }) => {
 
             {/* Handle media attachments like images or videos without chat bubble */}
             {hasAttachments && hasImageOrVideo && (
-                <div className="chat-image max-w-full">
+                <div className="chat-image max-w-screen-sm">
                     <MessageAttachments
                         attachments={message.attachments}
                         attachmentClick={attachmentClick}
@@ -54,14 +54,16 @@ const MessageItem = ({ message, attachmentClick }) => {
                 </div>
             )}
 
-            {/* Handle non-media attachments (excluding audio) */}
+            {/* Handle non-visual media attachments*/}
             {hasAttachments && !hasImageOrVideo && (
-                <div className={`chat-bubble relative ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-full`}>
-                    <MessageAttachments
-                        attachments={message.attachments}
-                        attachmentClick={attachmentClick}
-                        className="rounded-sm"
-                    />
+                <div className={`chat-bubble max-w-full`}>
+                    <div className="chat-message">
+                        <MessageAttachments
+                            attachments={message.attachments}
+                            attachmentClick={attachmentClick}
+                            className="rounded-sm"
+                        />
+                    </div>
                 </div>
             )}
             </div>

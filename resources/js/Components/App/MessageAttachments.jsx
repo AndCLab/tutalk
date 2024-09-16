@@ -7,8 +7,7 @@ import { isAudio, isImage, isPDF, isPreviewable, isVideo } from "../..//helpers"
 
 const MessageAttachments = ({ attachments, attachmentClick }) => {
     const isSingleAttachment = attachments.length === 1;
-    // Define attachment size classes based on the number of attachments
-    const attachmentSizeClass = isSingleAttachment ? "w-96" : "w-44";
+
     return (
         <>
             {attachments.length > 0 && (
