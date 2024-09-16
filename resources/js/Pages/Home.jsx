@@ -30,11 +30,9 @@ function Home({ selectedConversation = null, messages = null }) {
 
     const loadMoreMessages = useCallback(() => {
         console.log('Loading more messages... ', noMoreMessages); 
-        if(noMoreMessages) {
-            // debugger;       // for testing purposes (remove when finished)          
+        if (noMoreMessages) {
             return;
         }
-        // Find the first message object
         const firstMessage = localMessages[0];
         axios.get(route("message.loadOlder", firstMessage.id))
             .then(({ data }) => {
@@ -43,15 +41,19 @@ function Home({ selectedConversation = null, messages = null }) {
                     setNoMoreMessages(true);
                     return;
                 }
-                // Calculate how much is scrolled from bottom and scroll to the same position from bottom after messages are loaded
                 const scrollHeight = messagesCtrRef.current.scrollHeight;
                 const scrollTop = messagesCtrRef.current.scrollTop;
                 const clientHeight = messagesCtrRef.current.clientHeight;
-                const tmpScrollFromBottom = scrollHeight - scrollTop - clientHeight;
-                console.log("tmpScrollFromBottom ", tmpScrollFromBottom);
                 setScrollFromBottom(scrollHeight - scrollTop - clientHeight);
+    
                 setLocalMessages((prevMessages) => {
-                    return [...data.data.reverse(), ...prevMessages];
+                    // Merge and deduplicate messages based on their unique id
+                    const newMessages = data.data.reverse();
+                    const allMessages = [...newMessages, ...prevMessages];
+                    const uniqueMessages = allMessages.filter((message, index, self) => 
+                        index === self.findIndex((m) => m.id === message.id)
+                    );
+                    return uniqueMessages;
                 });
             });
     }, [localMessages, noMoreMessages]);
