@@ -11,13 +11,13 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
     return (
         <>
             {attachments.length > 0 && (
-                <div className="mt-2 flex flex-wrap justify-end gap-1">
+                <div className="flex flex-wrap justify-end gap-1">
                     {attachments.map((attachment, ind) => (
                         <div
                             onClick={(ev) => attachmentClick(attachments, ind)}
                             key={attachment.id}
                             className={`group flex flex-col items-center justify-center text-gray-500 relative cursor-pointer 
-                                ${isAudio(attachment) ? "w-84" : isSingleAttachment ? "w-80" : "w-44"} aspect-square bg-transparent
+                                ${isAudio(attachment) ? "w-84" : isSingleAttachment ? "w-80" : "w-44"} bg-transparent
                             `}
                         >
                             {!isAudio(attachment) && (
@@ -48,10 +48,7 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                             )}
                             {isAudio(attachment) && (
                                 <div className="relative flex justify-center items-center">
-                                    <audio
-                                        src={attachment.url}
-                                        controls
-                                    ></audio>
+                                    <audio src={attachment.url} controls></audio>
                                 </div>
                             )}
                             {isPDF(attachment) && (
