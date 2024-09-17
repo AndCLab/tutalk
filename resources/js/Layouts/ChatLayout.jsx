@@ -119,7 +119,7 @@ const ChatLayout = ({ children }) => {
         <>
         <div className="flex-1 w-full flex overflow-hidden">
 
-            <div className={`transition-all w-full sm:w-[220px] md:w-[360px] bg-emerald-900 border-r-2 border-r-emerald-950 flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""}`}>
+            <div className={`transition-all w-full sm:w-[220px] md:w-[440px] bg-emerald-900 border-r-2 border-r-emerald-950 flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""}`}>
                 <div className="flex p-3">
                     <TextInput onKeyUp={onSearch} placeholder="Filter users and groups" className="w-full h-8"/>
                     <div className="tooltip tooltip-left pt-1" data-tip="Create new Group">

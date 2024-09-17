@@ -65,10 +65,15 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                                     onClick={(ev) => ev.stopPropagation()}
                                     download
                                     href={attachment.url}
-                                    className="flex flex-col justify-center items-center"
+                                    className="flex flex-col justify-center items-center text-white hover:text-gray-500"
                                 >
-                                    <PaperClipIcon className="w-10 h-10 mb-3" />
-                                    <small className="text-center overflow-hidden">{attachment.name}</small>
+                                    <img
+                                        src="/img/no-preview.png"
+                                        alt="No preview available"
+                                        className="absolute w-full h-full top-0 left-0 object-cover z-0"
+                                    />
+                                    <PaperClipIcon className="w-10 h-10 mb-3 z-10" />
+                                    <small className="text-center overflow-hidden text-ellipsis z-10 max-w-24">{attachment.name}</small>
                                 </a>
                             )}
                         </div>
