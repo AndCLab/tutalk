@@ -65,7 +65,7 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                                     onClick={(ev) => ev.stopPropagation()}
                                     download
                                     href={attachment.url}
-                                    className="flex flex-col justify-center items-center text-white hover:text-gray-500"
+                                    className="flex flex-col justify-center items-center text-white hover:text-gray-300"
                                 >
                                     <img
                                         src="/img/no-preview.png"
