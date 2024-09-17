@@ -19,7 +19,7 @@ const MessageItem = ({ message, attachmentClick }) => {
      const hasAudio = message.attachments.some(attachment => isAudio(attachment));
 
     return (
-        <div className={`chat ${message.sender_id === currentUser.id ? "chat-end" : "chat-start"}`}>
+        <div className={`chat ${message.sender_id === currentUser.id ? "chat-end pt-3" : "chat-start"}`}>
             <UserAvatar user={message.sender} />
             <div className="chat-header">
                 {message.sender_id !== currentUser.id && (
@@ -69,7 +69,7 @@ const MessageItem = ({ message, attachmentClick }) => {
 
             {/* User timestamp after message/attachment */}
             {message.sender_id === currentUser.id && (
-                <time className={`text-xs opacity-50 text-gray-800 ml-2`}>
+                <time className={`text-xs opacity-50 text-gray-800 ml-2 pt-1`}>
                     {formatMessageDateLong(message.created_at)}
                 </time>
             )}
