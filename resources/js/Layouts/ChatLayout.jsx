@@ -16,6 +16,12 @@ const ChatLayout = ({ children }) => {
 
     const isUserOnline = (userId) => onlineUsers[userId];
 
+    // For testing/debugging
+    useEffect(() => {
+        console.log("Conversations from props:", conversations);
+    }, [conversations]);
+    
+
     const onSearch = (ev) => {
         const search = ev.target.value.toLowerCase();
         setLocalConversations(
