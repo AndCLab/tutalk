@@ -37,7 +37,7 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
                 )}
             </div>
             {conversation.is_user && (
-                <UserOptionsDropdown conversation={conversation} />
+                <UserOptionsDropdown conversation={conversation}/>
             )}
         </Link>
     );

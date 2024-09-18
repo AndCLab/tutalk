@@ -19,11 +19,18 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'avatar',
+        'fname',
+        'lname',
         'name',
         'email',
         'email_verified_at',
         'password',
-        'is_admin',
+        'address',
+        'zip_code',
+        'phone_prefix',
+        'phone_number',
+        'is_stepper',
+        'user_type',
     ];
 
     /**
@@ -99,10 +106,11 @@ class User extends Authenticatable
     {
         return [
             'id' => $this->id,
+            'fname' => $this->fname,
+            'lname' => $this->lname,
             'name' => $this->name,
             'is_group' => false,
             'is_user' => true,
-            'is_admin' => (bool) $this->is_admin,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'blocked_at' => $this->blocked_at,
