@@ -176,9 +176,9 @@ const MessageInput = ({ conversation = null }) => {
                                         )
                                     )
                                 }
-                                className="absolute w-6 h-6 rounded-full bg-gray-800 -right-2-top-2 text-gray-300 hover:text-gray-100 z-10"
+                                className="absolute w-6 h-6 rounded-full bg-gray-800 opacity-70 hover:opacity-100 -right-2-top-2 text-gray-300 hover:text-gray-100 z-10"
                             >
-                               <XCircleIcon className="w-6" /> 
+                               <XCircleIcon className="w-6 opacity-40" /> 
                             </button>
                         </div>
                     ))}

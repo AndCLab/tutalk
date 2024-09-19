@@ -4,7 +4,7 @@ import { formatBytes, isPDF, isPreviewable } from "@/helpers";
 
 const AttachmentPreview = ({ file }) => {
     return (
-        <div className="w-full flex items-center gap-2 py-2 px-3 rounded-md bg-emerald-800">
+        <div className="w-full flex items-center gap-2 py-2 px-3 rounded-md bg-emerald-800 hover:bg-emerald-700">
             <div>
                 {isPDF(file.file) && <img src="/img/pdf.png" className="w-8" />}
                 {!isPreviewable(file.file) && (

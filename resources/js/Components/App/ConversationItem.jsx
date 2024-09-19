@@ -35,9 +35,15 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
                         {conversation.last_message}
                     </p>
                 )}
+                
+                {conversation.last_message_date && conversation.last_message === null && (
+                    <p className="text-xs text-nowrap overflow-hidden text-ellipsis opacity-80 text-gray-300">
+                        Sent an attachment.
+                    </p>
+                )}
             </div>
             {conversation.is_user && (
-                <UserOptionsDropdown conversation={conversation} />
+                <UserOptionsDropdown conversation={conversation}/>
             )}
         </Link>
     );

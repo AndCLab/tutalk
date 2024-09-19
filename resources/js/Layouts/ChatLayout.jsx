@@ -16,6 +16,12 @@ const ChatLayout = ({ children }) => {
 
     const isUserOnline = (userId) => onlineUsers[userId];
 
+    // For testing/debugging
+    useEffect(() => {
+        console.log("conversation from props:", conversations);
+    }, [conversations]);
+    
+
     const onSearch = (ev) => {
         const search = ev.target.value.toLowerCase();
         setLocalConversations(
@@ -130,12 +136,12 @@ const ChatLayout = ({ children }) => {
                 </div>
                 <div className="flex-1 overflow-auto bg-emerald-800 border-2 border-emerald-900">
                     {sortedConversations && sortedConversations.map((conversation) => (
-                        <ConversationItem 
+                        (<ConversationItem 
                             key={`${conversation.is_group ? "group_" : "user_"}${conversation.id}`}
                             conversation={conversation}
                             online={!!isUserOnline(conversation.id)}
                             selectedConversation={selectedConversation}
-                        />
+                        />)
                     ))}
                 </div>
             </div>

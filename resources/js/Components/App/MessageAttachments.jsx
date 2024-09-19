@@ -16,7 +16,7 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                         <div
                             onClick={(ev) => attachmentClick(attachments, ind)}
                             key={attachment.id}
-                            className={`group flex flex-col items-center justify-center text-gray-500 relative cursor-pointer 
+                            className={`group flex flex-col items-center justify-center text-gray-500 relative cursor-pointer
                                 ${isAudio(attachment) ? "w-84" : isSingleAttachment ? "w-80" : "w-44"} bg-transparent
                             `}
                         >
