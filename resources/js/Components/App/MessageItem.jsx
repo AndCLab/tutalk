@@ -51,23 +51,26 @@ const MessageItem = ({ message, attachmentClick }) => {
 
                 {/* Handle media attachments like images or videos without chat bubble */}
                 {hasAttachments && hasImageOrVideo && (
-                    <div className="chat-image max-w-screen-sm">
-                        <div>
-                            {message.sender_id === currentUser.id && (
-                                <MessageOptionsDropdown message={message} />
-                            )}
+                    <div className={`chat-bubble bg-transparent ${message.sender_id === currentUser.id ? "" : ""} max-w-full`}>
+                        {message.sender_id === currentUser.id && (
+                            <MessageOptionsDropdown message={message} />
+                        )}
+                        <div className="chat-image max-w-screen-sm">
+                            <MessageAttachments
+                                attachments={message.attachments}
+                                attachmentClick={attachmentClick}
+                                className="rounded-sm"
+                            />
                         </div>
-                        <MessageAttachments
-                            attachments={message.attachments}
-                            attachmentClick={attachmentClick}
-                            className="rounded-sm"
-                        />
                     </div>
                 )}
 
                 {/* Handle non-visual media attachments */}
                 {hasAttachments && !hasImageOrVideo && (
-                    <div className={`chat-bubble ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-full`}>
+                    <div className={`chat-bubble bg-transparent p-2 border-2 border-emerald-700 max-w-full`}>
+                        {message.sender_id === currentUser.id && (
+                            <MessageOptionsDropdown message={message} />
+                        )}
                         <div className="chat-message">
                             <MessageAttachments
                                 attachments={message.attachments}
