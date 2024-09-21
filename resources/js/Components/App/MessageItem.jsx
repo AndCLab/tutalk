@@ -5,6 +5,7 @@ import UserAvatar from "./UserAvatar";
 import { formatMessageDateLong } from "@/helpers";
 import MessageAttachments from "./MessageAttachments";
 import { isImage, isVideo, isAudio } from "../../helpers"; // Import helpers to check for media types
+import MessageOptionsDropdown from "./MessageOptionsDropdown";
 
 const MessageItem = ({ message, attachmentClick }) => {
     const currentUser = usePage().props.auth.user;
@@ -34,6 +35,11 @@ const MessageItem = ({ message, attachmentClick }) => {
                 {/* Render chat-bubble only if there are no media attachments */}
                 {!hasAttachments && (
                     <div className={`chat-bubble relative ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-xl`}>
+
+                        {message.sender_id === currentUser.id && (
+                            <MessageOptionsDropdown message={message} />
+                        )}
+
                         <div className="chat-message">
                             {/* Render text content */}
                             <div className="chat-message-content m-w-full">
@@ -45,18 +51,26 @@ const MessageItem = ({ message, attachmentClick }) => {
 
                 {/* Handle media attachments like images or videos without chat bubble */}
                 {hasAttachments && hasImageOrVideo && (
-                    <div className="chat-image max-w-screen-sm">
-                        <MessageAttachments
-                            attachments={message.attachments}
-                            attachmentClick={attachmentClick}
-                            className="rounded-sm"
-                        />
+                    <div className={`chat-bubble bg-transparent ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-full`}>
+                        {message.sender_id === currentUser.id && (
+                            <MessageOptionsDropdown message={message} />
+                        )}
+                        <div className="chat-image max-w-screen-sm">
+                            <MessageAttachments
+                                attachments={message.attachments}
+                                attachmentClick={attachmentClick}
+                                className="rounded-sm"
+                            />
+                        </div>
                     </div>
                 )}
 
                 {/* Handle non-visual media attachments */}
                 {hasAttachments && !hasImageOrVideo && (
-                    <div className={`chat-bubble ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-full`}>
+                    <div className={`chat-bubble bg-transparent p-2 border-2 border-emerald-700 ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-full`}>
+                        {message.sender_id === currentUser.id && (
+                            <MessageOptionsDropdown message={message} />
+                        )}
                         <div className="chat-message">
                             <MessageAttachments
                                 attachments={message.attachments}
