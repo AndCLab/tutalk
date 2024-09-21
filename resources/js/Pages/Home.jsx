@@ -7,6 +7,7 @@ import MessageItem from '@/Components/App/MessageItem';
 import MessageInput from '@/Components/App/MessageInput';
 import AttachmentPreviewModal from '@/Components/App/AttachmentPreviewModal';
 import { useEventBus } from '@/EventBus';
+import MessageOptionsDropdown from '@/Components/App/MessageOptionsDropdown';
 
 function Home({ selectedConversation = null, messages = null }) {
     const [localMessages, setLocalMessages] = useState([]);
@@ -27,6 +28,20 @@ function Home({ selectedConversation = null, messages = null }) {
             setLocalMessages((prevMessages) => [...prevMessages, message]);
         }
     };
+
+    const messageDeleted = (message) => {
+        if (selectedConversation && selectedConversation.is_group && selectedConversation.id == message.group_id) {
+            setLocalMessages((prevMessages) => {
+                return prevMessages.filter((m) => m.id !== message.id);
+            });
+        }
+
+        if (selectedConversation && selectedConversation.is_user && (selectedConversation.id == message.sender_id || selectedConversation.id == message.receiver_id)) {
+            setLocalMessages((prevMessages) => {
+                return prevMessages.filter((m) => m.id !== message.id);
+            });
+        }
+    }
 
     const loadMoreMessages = useCallback(() => {
         console.log('Loading more messages... ', noMoreMessages); 
@@ -74,11 +89,14 @@ function Home({ selectedConversation = null, messages = null }) {
         }, 10);
 
         const offCreated = on('message.created', messageCreated);
+        const offDeleted = on('message.deleted', messageDeleted);
+
         setScrollFromBottom(0);
         setNoMoreMessages(false);
 
         return () => {
             offCreated();
+            offDeleted();
         };
     }, [selectedConversation]);
 
