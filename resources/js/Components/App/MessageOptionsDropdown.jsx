@@ -11,7 +11,7 @@ export default function MessageOptionsDropdown({ message }) {
         axios
             .delete(route("message.destroy", message.id))
             .then((res) => {
-                emit("message.deleted", message);
+                // emit("message.deleted", message);
                 console.log(res.data);
             })
             .catch((err) => {
@@ -35,7 +35,7 @@ export default function MessageOptionsDropdown({ message }) {
                     leave="transition ease-in duration-75"
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95">
-                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md bg-emerald-950 shadow-lg z-[100]">
+                        <Menu.Items className="absolute right-0 mt-2 w-24 rounded-md bg-emerald-950 shadow-lg z-[100]">
                             <div className="px-1 py-1">
                                 <Menu.Item>
                                     {({ active }) => (
