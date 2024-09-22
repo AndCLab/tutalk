@@ -33,8 +33,9 @@ class MessageObserver
                     ->limit(1)
                     ->first();
                 
-                if (prevMessage) {
+                if ($prevMessage) {
                     $group->last_message_id = $prevMessage->id;
+                    $group->save();
                 }
             }
         } else {
