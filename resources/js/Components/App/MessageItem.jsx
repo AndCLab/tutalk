@@ -67,7 +67,7 @@ const MessageItem = ({ message, attachmentClick }) => {
 
                 {/* Handle non-visual media attachments */}
                 {hasAttachments && !hasImageOrVideo && (
-                    <div className={`chat-bubble bg-transparent p-2 border-2 border-emerald-700 ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-full`}>
+                    <div className={`chat-bubble bg-transparent pl-1 border-2 border-emerald-700 ${message.sender_id === currentUser.id ? "chat-bubble-success" : ""} max-w-xl`}>
                         {message.sender_id === currentUser.id && (
                             <MessageOptionsDropdown message={message} />
                         )}
