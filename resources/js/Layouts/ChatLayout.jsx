@@ -1,4 +1,5 @@
 import ConversationItem from '@/Components/App/ConversationItem';
+import GroupModal from '@/Components/App/GroupModal';
 import TextInput from "@/Components/TextInput";
 import { useEventBus } from '@/EventBus';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
@@ -12,6 +13,7 @@ const ChatLayout = ({ children }) => {
     const [localConversations, setLocalConversations] = useState([]);
     const [sortedConversations, setSortedConversations] = useState([]); 
     const [onlineUsers, setOnlineUsers] = useState({});
+    const [showGroupModal, setShowGroupModal] = useState(false);
     const {on} = useEventBus();
 
     const isUserOnline = (userId) => onlineUsers[userId];
@@ -138,7 +140,10 @@ const ChatLayout = ({ children }) => {
                 <div className="flex p-3">
                     <TextInput onKeyUp={onSearch} placeholder="Filter users and groups" className="w-full h-8"/>
                     <div className="tooltip tooltip-left pt-1" data-tip="Create new Group">
-                        <button className="text-gray-100 hover:text-gray-400">
+                        <button 
+                            onClick={(ev) => setShowGroupModal(true)} 
+                            className="text-gray-100 hover:text-gray-400"
+                        >
                             <PencilSquareIcon className="w-4 h-4 inline-block ml-2"/>
                         </button>
                     </div>
@@ -159,6 +164,10 @@ const ChatLayout = ({ children }) => {
                 {children}
             </div>
         </div>
+        <GroupModal 
+            show={showGroupModal} 
+            onClose={() =>setShowGroupModal(false)} 
+        />
         </>
     );
 }
