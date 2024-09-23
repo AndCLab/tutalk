@@ -9,8 +9,8 @@ export default function GroupUsersPopover({ users = [] }) {
         <Popover className="relative z-10">
             {({ open }) =>  (
                 <>
-                    <Popover.Button className={`${ open ? "text-gray-200" : "tex-gray-400"} hover:text-gray-200`}>
-                        <UserIcon className="w-4" />
+                    <Popover.Button className={`${ open ? "text-gray-200" : "tex-gray-400"} hover:text-gray-200 text-xs right-0 focus:outline-none`}>
+                        {users.length} members
                     </Popover.Button>
                     <Transition
                         as={Fragment}

@@ -78,6 +78,17 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                     />
                     <InputError className="mt-2" message={errors.description} />
                 </div>
+                <div className="mt-8">
+                    <InputLabel htmlFor="description" value="Description" />
+                    <TextInput 
+                        id="description" 
+                        className="mt-1 block w-full" 
+                        value={data.description} 
+                        disabled={!!group.id} 
+                        onChange={(e) => setData("description", e.target.value)}
+                    />
+                    <InputError className="mt-2" message={errors.description} />
+                </div>
 
                 <div className="mt-4">
                     <InputLabel value="Select Users" />

@@ -38,9 +38,11 @@ const ConversationHeader = ({ selectedConversation }) => {
                         <div className="flex">
                             <h3 className="text-gray-100">{selectedConversation.name}</h3>
                             {selectedConversation.is_group && (
-                                <p className="pl-4 pt-1 opacity-60 text-xs text-gray-100">
-                                    {selectedConversation.users.length} members
-                                </p>
+                                <div className="text-gray-400 pl-3">
+                                    <GroupUsersPopover  
+                                        users={selectedConversation.users}
+                                    />
+                                </div>
                             )}
                         </div>
                     </div>
@@ -49,11 +51,6 @@ const ConversationHeader = ({ selectedConversation }) => {
                             <GroupDescriptionPopover
                                 description={selectedConversation.description}
                             />
-                            <div className="text-gray-400">
-                            <GroupUsersPopover  
-                                users={selectedConversation.users}
-                            />
-                            </div>
                             {selectedConversation.owner_id == authUser.id && (
                                 <>
                                     <div className="tooltip tooltip-left z-20" data-tip="Edit Group">
