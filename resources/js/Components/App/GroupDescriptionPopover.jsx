@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 
 export default function GroupDescriptionPopover({ description }) {
@@ -9,10 +9,10 @@ export default function GroupDescriptionPopover({ description }) {
                 <>
                     <Popover.Button 
                         className={`${
-                            open ? "text-gray-200" : "text-gray-400"
+                            open ? "text-gray-100" : "text-gray-300"
                         } hover:text-gray-200`}
                     >
-                       <ExclamationCircleIcon className="w-4" /> 
+                       <QuestionMarkCircleIcon className="w-4" /> 
                     </Popover.Button>
                     <Transition
                         as={Fragment}
