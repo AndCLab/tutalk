@@ -3,7 +3,7 @@ import { EllipsisVerticalIcon, LockClosedIcon, LockOpenIcon, ShieldCheckIcon, Us
 import { Fragment } from "react";
 import axios from "axios";
 
-export default function UserOptionsDropdown({ conversation}) {
+export default function UserOptionsDropdown({ conversation }) {
     const changeUserRole = () => {
         console.log("Change user role");
         if(!conversation.is_user) {
