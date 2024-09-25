@@ -19,8 +19,8 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
     return (
         <Link href={conversation.is_group ? route("chat.group", conversation) : route("chat.user", conversation)}
         preserveState
-        className={"conversation-item flex items-center gap-2 p-2 text-gray-100 transition-all cursor-pointer border-1-4 border-emerald-900 hover:bg-gray-100"
-        + classes + (conversation.is_user ? " pr-2" : " pr-4")}>
+        className={"pr-2 conversation-item flex items-center gap-2 p-2 text-gray-100 transition-all cursor-pointer border-1-4 border-emerald-900 hover:bg-gray-100"
+        + classes}>
             {conversation.is_user && (
                 <UserAvatar user={conversation} online={online} />
             )}
@@ -44,6 +44,9 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
             </div>
             {conversation.is_user && (
                 <UserOptionsDropdown conversation={conversation}/>
+            )}
+            {conversation.is_group && (
+                <UserOptionsDropdown/>
             )}
         </Link>
     );

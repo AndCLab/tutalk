@@ -29,7 +29,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                 <div className="p-3 flex justify-between items-center border-b-2 border-emerald-900 bg-emerald-900">
                     <div className="flex items-center gap-3">
                         <Link href={route("dashboard")} className="inline-block sm:hidden">
-                            <ArrowLeftIcon className="w-6" />
+                            <ArrowLeftIcon className="w-6 text-gray-100" />
                         </Link>
                         {selectedConversation.is_user && (
                             <UserAvatar user={selectedConversation} />
@@ -54,12 +54,12 @@ const ConversationHeader = ({ selectedConversation }) => {
                             {selectedConversation.owner_id == authUser.id && (
                                 <>
                                     <div className="tooltip tooltip-left z-20" data-tip="Edit Group">
-                                        <button onClick={(ev) => emit("GroupMoal.show", selectedConversation)} className="text-gray-400 hover:text-gray-200">
+                                        <button onClick={(ev) => emit("GroupMoal.show", selectedConversation)} className="text-gray-300 hover:text-gray-100">
                                             <PencilSquareIcon className="w-4"/>
                                         </button>
                                     </div>
                                     <div className="tooltip tooltip-left z-20" data-tip="Delete Group">
-                                        <button onClick={onDeleteGroup} className="text-gray-400 hover:text-gray-200">
+                                        <button onClick={onDeleteGroup} className="text-gray-300 hover:text-gray-100">
                                             <TrashIcon className="w-4"/>
                                         </button>
                                     </div>

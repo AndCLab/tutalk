@@ -1,9 +1,9 @@
 import { Menu, Transition } from "@headlessui/react";
-import { EllipsisVerticalIcon, LockClosedIcon, LockOpenIcon, ShieldCheckIcon, UserIcon, } from "@heroicons/react/24/solid";
+import { EllipsisVerticalIcon, LockClosedIcon, LockOpenIcon, ShieldCheckIcon, UserIcon, ShieldExclamationIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 import axios from "axios";
 
-export default function UserOptionsDropdown({ conversation}) {
+export default function UserOptionsDropdown({ conversation }) {
     const changeUserRole = () => {
         console.log("Change user role");
         if(!conversation.is_user) {
@@ -65,8 +65,8 @@ export default function UserOptionsDropdown({ conversation}) {
                                             )}
                                             {!conversation.blocked_at && (
                                                 <>
-                                                    <LockClosedIcon className="w-4 h-4 mr-2" />
-                                                    Block User
+                                                    <ShieldExclamationIcon className="w-4 h-4 mr-2" />
+                                                    Report User
                                                 </>
                                             )}
                                         </button>
@@ -85,8 +85,8 @@ export default function UserOptionsDropdown({ conversation}) {
                                             )}
                                             {!conversation.is_admin && (
                                                 <>
-                                                    <ShieldCheckIcon className="w-4 h-4 mr-2"/>
-                                                    Make Admin
+                                                    <UserCircleIcon className="w-4 h-4 mr-2"/>
+                                                    View Profile
                                                 </>
                                             )}                                      
                                         </button>

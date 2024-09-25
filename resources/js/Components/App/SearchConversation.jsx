@@ -1,57 +1,51 @@
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/solid";
 
-export default function UserPicker({ value, options, onSelect }) {
-    const [selected, setSelected] = useState(value);
+export default function SearchConversation({ authUser, options, onConversationCreate }) {
     const [query, setQuery] = useState("");
-    const [isOpen, setIsOpen] = useState(false);  // Track dropdown open state
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);  // Track the selected user
 
-    const filteredPeople = 
+    // Filter users based on query
+    const filteredUsers = 
         query === "" 
             ? []  // No users shown when query is empty
-            : options.filter((person) => 
-                person.name
+            : options.filter((user) => 
+                user.name
                     .toLowerCase()
                     .replace(/\s+/g, "")
                     .includes(query.toLowerCase().replace(/\s+/g, ""))
             );
-    
-    // Handle user selection
-    const onSelected = (persons) => {
-        setSelected(persons);      // Update selected state
-        onSelect(persons);         // Trigger the parent callback
-        setQuery("");              // Clear the input box after a user is selected
-        setIsOpen(false);          // Close the dropdown
+
+    // Handle the user selection
+    const onSelectedUser = (user) => {
+        setSelectedUser(user);       // Update the selected user
+        setQuery("");                // Clear the search input
+        setIsOpen(false);            // Close the dropdown
+
+        // Trigger the parent callback to create a conversation
+        if (onConversationCreate) {
+            onConversationCreate(authUser.id, user.id);  // Pass both user IDs to create a conversation
+        }
     };
 
-    // Remove selected user
-    const removeUser = (user) => {
-        const updatedSelected = selected.filter((person) => person.id !== user.id);
-        setSelected(updatedSelected);
-        onSelect(updatedSelected);
-    };
-
-    // Close dropdown if the query is empty or no users match
+    // Handle input change and toggle dropdown visibility
     const handleInputChange = (event) => {
         const inputValue = event.target.value;
         setQuery(inputValue);
-        if (inputValue.trim() === "") {
-            setIsOpen(false);  // Close dropdown if input is empty
-        } else {
-            setIsOpen(true);  // Open dropdown if input has a value
-        }
+        setIsOpen(inputValue.trim() !== "");  // Open dropdown only if input is not empty
     };
 
     return (
         <>
-            <Combobox value={selected} onChange={onSelected} multiple>
+            <Combobox value={selectedUser} onChange={onSelectedUser}>
                 <div className="relative mt-1">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input 
                             className="border-gray-300 dark:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
-                            displayValue={() => ""}
-                            placeholder="Select users..."
+                            displayValue={() => (selectedUser ? selectedUser.name : "")}
+                            placeholder="Search users to chat..."
                             value={query}  // Bind input value to query
                             onChange={handleInputChange}  // Handle input change
                         />
@@ -74,15 +68,15 @@ export default function UserPicker({ value, options, onSelect }) {
                             afterLeave={() => setQuery("")}
                         >
                             <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {filteredPeople.length === 0 && query !== "" ? (
+                                {filteredUsers.length === 0 && query !== "" ? (
                                     <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                         Nothing found.
                                     </div>
                                 ) : (
-                                    filteredPeople.map((person) => (
+                                    filteredUsers.map((user) => (
                                         <Combobox.Option 
-                                            key={person.id} 
-                                            value={person} 
+                                            key={user.id} 
+                                            value={user} 
                                             className={({ active }) =>
                                                 `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                                     active ? "bg-teal-600 text-white" : "bg-gray-900 text-gray-100"
@@ -92,7 +86,7 @@ export default function UserPicker({ value, options, onSelect }) {
                                             {({ selected, active }) => (
                                                 <>
                                                     <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
-                                                        {person.name}
+                                                        {user.name}
                                                     </span>
                                                     {selected && (
                                                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-white">
@@ -109,23 +103,6 @@ export default function UserPicker({ value, options, onSelect }) {
                     )}
                 </div>
             </Combobox>
-
-            {/* Display selected users with an 'x' icon for removal */}
-            {selected && selected.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                    {selected.map((person) => (
-                        <div key={person.id} className="flex items-center bg-emerald-700 text-white rounded-full px-3 py-1">
-                            {person.name}
-                            <button
-                                className="ml-2 text-white hover:text-gray-200"
-                                onClick={() => removeUser(person)}
-                            >
-                                <XMarkIcon className="h-4 w-4" aria-hidden="true" />
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            )}
         </>
     );
 }

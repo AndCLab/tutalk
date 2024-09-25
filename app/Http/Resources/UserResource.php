@@ -25,6 +25,8 @@ class UserResource extends JsonResource
             'is_admin' => (bool) $this->is_admin,
             'last_message' => $this->last_message,
             'last_message_date' => $this->last_message_date,
+            'user_type' => $this->user_type,
+            'tutor_verification_status' => $this->tutor ? $this->tutor->verify_status : null,
         ];
     }
 }

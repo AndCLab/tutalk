@@ -6,6 +6,7 @@ import { formatMessageDateLong } from "@/helpers";
 import MessageAttachments from "./MessageAttachments";
 import { isImage, isVideo, isAudio } from "../../helpers"; // Import helpers to check for media types
 import MessageOptionsDropdown from "./MessageOptionsDropdown";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 const MessageItem = ({ message, attachmentClick }) => {
     const currentUser = usePage().props.auth.user;
@@ -19,18 +20,28 @@ const MessageItem = ({ message, attachmentClick }) => {
      // Check if attachments include audio
      const hasAudio = message.attachments.some(attachment => isAudio(attachment));
 
+     // Check if sender is verified (based on `tutor_verification_status` in the UserResource)
+    const isVerified = message.sender.tutor_verification_status === 'verified';
+    console.log('message sender', message.sender);
+    
     return (
         <div className={`chat ${message.sender_id === currentUser.id ? "chat-end pt-3" : "chat-start"}`}>
             <UserAvatar user={message.sender} />
             <div className="chat-header">
-                {message.sender_id !== currentUser.id && (
-                    <span>{message.sender.name}</span>
-                )}
-                {message.sender_id !== currentUser.id && (
-                    <time className={`text-xs opacity-50 text-gray-800 ml-2`}>
-                        {formatMessageDateLong(message.created_at)}
-                    </time>
-                )}
+            <div className="flex items-center space-x-1">
+                    {message.sender_id !== currentUser.id && (
+                        <span>{message.sender.name}</span>
+                    )}
+                    {/* Show verified icon if the user is verified */}
+                    {(message.sender_id !== currentUser.id && isVerified) && (
+                        <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                    )}
+                    {message.sender_id !== currentUser.id && (
+                        <time className={`text-xs opacity-50 text-gray-800`}>
+                            {formatMessageDateLong(message.created_at)}
+                        </time>
+                    )}
+                </div>
 
                 {/* Render chat-bubble only if there are no media attachments */}
                 {!hasAttachments && (

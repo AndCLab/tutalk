@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class, 'group_users');
     }
 
+    public function tutor()
+    {
+        return $this->hasOne(Tutor::class, 'user_id');
+    }  
+
     public static function getUsersExceptUser(User $user)
     {
         $userId = $user->id;
@@ -116,6 +121,7 @@ class User extends Authenticatable
             'blocked_at' => $this->blocked_at,
             'last_message' => $this->last_message,
             'last_message_date' => $this->last_message_date ? ($this->last_message_date . ' UTC') : null,
+            'user_type' => $this->user_type,
         ];
     }
 }
