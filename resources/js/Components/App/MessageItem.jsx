@@ -20,8 +20,8 @@ const MessageItem = ({ message, attachmentClick }) => {
      // Check if attachments include audio
      const hasAudio = message.attachments.some(attachment => isAudio(attachment));
 
-     // Check if sender is a 'tutor' needs to also check if the 'verified_status' is 'verified'
-    const isTutorVerified = message.sender.user_type === 'tutor';
+     // Check if sender is verified (based on `tutor_verification_status` in the UserResource)
+    const isVerified = message.sender.tutor_verification_status === 'verified';
     console.log('message sender', message.sender);
     
     return (
@@ -32,8 +32,8 @@ const MessageItem = ({ message, attachmentClick }) => {
                     {message.sender_id !== currentUser.id && (
                         <span>{message.sender.name}</span>
                     )}
-                    {/* Show verified icon if user is a verified tutor */}
-                    {(message.sender_id !== currentUser.id && isTutorVerified) && (
+                    {/* Show verified icon if the user is verified */}
+                    {(message.sender_id !== currentUser.id && isVerified) && (
                         <CheckCircleIcon className="w-4 h-4 text-green-500" />
                     )}
                     {message.sender_id !== currentUser.id && (

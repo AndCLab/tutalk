@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class, 'group_users');
     }
 
+    public function tutor()
+    {
+        return $this->hasOne(Tutor::class, 'user_id');
+    }  
+
     public static function getUsersExceptUser(User $user)
     {
         $userId = $user->id;
