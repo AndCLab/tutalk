@@ -22,7 +22,7 @@ const MessageItem = ({ message, attachmentClick }) => {
 
      // Check if sender is verified (based on `tutor_verification_status` in the UserResource)
     const isVerified = message.sender.tutor_verification_status === 'verified';
-    console.log('message sender', message.sender);
+    // console.log('message sender', message.sender);
     
     return (
         <div className={`chat ${message.sender_id === currentUser.id ? "chat-end pt-3" : "chat-start"}`}>
