@@ -25,7 +25,7 @@ const MessageItem = ({ message, attachmentClick }) => {
     // console.log('message sender', message.sender);
     
     return (
-        <div className={`chat ${message.sender_id === currentUser.id ? "chat-end pt-3" : "chat-start"}`}>
+        <div className={`chat ${message.sender_id === currentUser.id ? "chat-end pt-3 pl-11" : "chat-start pr-11"}`}>
             <UserAvatar user={message.sender} />
             <div className="chat-header">
             <div className="flex items-center space-x-1">
@@ -51,7 +51,7 @@ const MessageItem = ({ message, attachmentClick }) => {
                             <MessageOptionsDropdown message={message} />
                         )}
 
-                        <div className="chat-message">
+                        <div className="chat-message text-base">
                             {/* Render text content */}
                             <div className="chat-message-content m-w-full">
                                 <ReactMarkdown>{message.message}</ReactMarkdown>

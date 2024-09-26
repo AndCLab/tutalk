@@ -19,9 +19,9 @@ const ChatLayout = ({ children }) => {
     const isUserOnline = (userId) => onlineUsers[userId];
 
     // For testing/debugging
-    useEffect(() => {
-        console.log("conversation from props:", conversations);
-    }, [conversations]);
+    // useEffect(() => {
+    //     console.log("conversation from props:", conversations);
+    // }, [conversations]);
     
 
     const onSearch = (ev) => {

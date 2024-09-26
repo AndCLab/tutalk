@@ -5,10 +5,16 @@ import GroupAvatar from "./GroupAvatar";
 import GroupDescriptionPopover from "./GroupDescriptionPopover";
 import GroupUsersPopover from "./GroupUsersPopover";
 import { useEventBus } from "@/EventBus";
+import { useEffect } from "react";
 
 const ConversationHeader = ({ selectedConversation }) => {
     const authUser = usePage().props.auth.user;
     const { emit } = useEventBus();
+
+    // For testing purposes
+    //  useEffect(() => {
+    //     console.log("selectedConversation from props:", selectedConversation);
+    // }, [selectedConversation]);
 
     const onDeleteGroup = () => {
         if(window.confirm("Are you sure you want to delete this group?")) {
