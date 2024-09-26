@@ -5,10 +5,16 @@ import GroupAvatar from "./GroupAvatar";
 import GroupDescriptionPopover from "./GroupDescriptionPopover";
 import GroupUsersPopover from "./GroupUsersPopover";
 import { useEventBus } from "@/EventBus";
+import { useEffect } from "react";
 
 const ConversationHeader = ({ selectedConversation }) => {
     const authUser = usePage().props.auth.user;
     const { emit } = useEventBus();
+
+    // For testing purposes
+    //  useEffect(() => {
+    //     console.log("selectedConversation from props:", selectedConversation);
+    // }, [selectedConversation]);
 
     const onDeleteGroup = () => {
         if(window.confirm("Are you sure you want to delete this group?")) {
@@ -36,7 +42,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                         )}
                         {selectedConversation.is_group && <GroupAvatar />}
                         <div className="flex">
-                            <h3 className="text-gray-100">{selectedConversation.name}</h3>
+                            <h3 className="text-white">{selectedConversation.name}</h3>
                             {selectedConversation.is_group && (
                                 <div className="text-gray-400 pl-3">
                                     <GroupUsersPopover  

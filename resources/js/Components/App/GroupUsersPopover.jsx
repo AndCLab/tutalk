@@ -1,10 +1,17 @@
 import { Popover, Transition } from "@headlessui/react";
 import { UserIcon } from "@heroicons/react/24/solid";
-import  { Fragment } from "react";
+import  { Fragment, useEffect } from "react";
 import UserAvatar from "./UserAvatar";
 import { Link } from "@inertiajs/react";
+import { formatUserType } from "@/helpers";
 
 export default function GroupUsersPopover({ users = [] }) {
+
+    // For Testing Purposes
+    useEffect(() => {
+        console.log("users from users []:", users);
+    }, [users]);
+
     return (
         <Popover className="relative z-10">
             {({ open }) =>  (
@@ -30,9 +37,11 @@ export default function GroupUsersPopover({ users = [] }) {
                                             key={user.id}
                                             className="flex items-center gap-2 py-2 px-3 hover:bg-black/30"
                                         >
-                                             <UserAvatar user={user} />
-                                             <div className="text-xs text-white">
-                                                {user.name}
+                                             <div className="text-xs text-white flex flex-col">
+                                                <span>{user.name}</span>
+                                                <span className="text-gray-400 text-xs">
+                                                    {formatUserType(user.user_type)}
+                                                </span>
                                              </div>
                                         </Link>
                                     ))}

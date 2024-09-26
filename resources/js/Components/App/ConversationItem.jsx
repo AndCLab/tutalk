@@ -3,10 +3,18 @@ import UserAvatar from "./UserAvatar";
 import GroupAvatar from "./GroupAvatar";
 import UserOptionsDropdown from "./UserOptionsDropdown";
 import { formatMessageDateShort } from "@/helpers";
+import { useEffect } from "react";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 const ConversationItem = ({conversation, selectedConversation=null, online=null}) => {
     const page = usePage();
     const currentUser = page.props.auth.user;
+
+    // For Testing Purposes
+    // useEffect(() => {
+    //     console.log("conversation from props:", conversation);
+    // }, [conversation]);
+
     let classes = "border-transparent";
     if (selectedConversation) {
         if (!selectedConversation.is_group && !conversation.is_group && selectedConversation.id == conversation.id) {
@@ -27,7 +35,12 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
             {conversation.is_group && <GroupAvatar/>}
             <div className={`flex-1 text-xs max-w-full overflow-hidden` + (conversation.is_user && conversation.blocked_at ? "opacity-50" : "")}>
                 <div className="flex gap-1 justify-between items-center">
-                    <h3 className="text-sm font-semibold overflow-hidden text-nowrap text-ellipsis">{conversation.name}</h3>
+                    <div className="flex items-center gap-1">
+                        <h3 className="text-base font-semibold overflow-hidden text-nowrap text-ellipsis">{conversation.name}</h3>
+                        {conversation.verify_status && (
+                            <CheckCircleIcon className="w-4 h-4 text-green-500"/>
+                        )}
+                    </div>
                     {conversation.last_message_date && (<span className="text-nowrap opacity-80 text-gray-300">{ formatMessageDateShort(conversation.last_message_date) }</span>)}
                 </div>
                 {conversation.last_message && (

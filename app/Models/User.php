@@ -122,6 +122,7 @@ class User extends Authenticatable
             'last_message' => $this->last_message,
             'last_message_date' => $this->last_message_date ? ($this->last_message_date . ' UTC') : null,
             'user_type' => $this->user_type,
+            'verify_status' => $this->tutor ? $this->tutor->verify_status === 'verified' : false,
         ];
     }
 }

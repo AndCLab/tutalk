@@ -24,6 +24,11 @@ export const formatMessageDateLong = (date) => {
     }
 };
 
+export const formatUserType = (string) => {
+    if (!string) return '';
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 export const formatMessageDateShort = (date) => {
     const now = new Date();
     const inputDate = new Date(date);
