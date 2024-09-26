@@ -38,7 +38,7 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
                     <div className="flex items-center gap-1">
                         <h3 className="text-base font-semibold overflow-hidden text-nowrap text-ellipsis">{conversation.name}</h3>
                         {conversation.verify_status && (
-                            <CheckCircleIcon className="w-3 h-3 text-green-500"/>
+                            <CheckCircleIcon className="w-4 h-4 text-green-500"/>
                         )}
                     </div>
                     {conversation.last_message_date && (<span className="text-nowrap opacity-80 text-gray-300">{ formatMessageDateShort(conversation.last_message_date) }</span>)}

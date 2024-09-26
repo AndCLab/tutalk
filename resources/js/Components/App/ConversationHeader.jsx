@@ -42,7 +42,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                         )}
                         {selectedConversation.is_group && <GroupAvatar />}
                         <div className="flex">
-                            <h3 className="text-gray-100">{selectedConversation.name}</h3>
+                            <h3 className="text-white">{selectedConversation.name}</h3>
                             {selectedConversation.is_group && (
                                 <div className="text-gray-400 pl-3">
                                     <GroupUsersPopover  
