@@ -115,7 +115,7 @@ const ChatLayout = ({ children }) => {
                     <div className="flex p-2">
                         <SearchConversation 
                             value={selectedUsers} 
-                            options={users} // Pass all users to UserPicker
+                            options={users}
                             onSelect={handleUserSelect} 
                         />
                         <div className="tooltip tooltip-left pt-1" data-tip="Create new Group">
