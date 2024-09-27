@@ -8,9 +8,9 @@ import { formatUserType } from "@/helpers";
 export default function GroupUsersPopover({ users = [] }) {
 
     // For Testing Purposes
-    useEffect(() => {
-        console.log("users from users []:", users);
-    }, [users]);
+    // useEffect(() => {
+    //     console.log("users from users []:", users);
+    // }, [users]);
 
     return (
         <Popover className="relative z-10">
