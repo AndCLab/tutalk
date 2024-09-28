@@ -18,16 +18,16 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
     let classes = "border-transparent";
     if (selectedConversation) {
         if (!selectedConversation.is_group && !conversation.is_group && selectedConversation.id == conversation.id) {
-            classes = "border-blue-500 bg-black/20";
+            classes = "border-emerald-500 bg-black/20";
         }
         if (selectedConversation.is_group && conversation.is_group && selectedConversation.id == conversation.id) {
-            classes = "border-blue-500 bg-black/20";
+            classes = "border-emerald-500 bg-black/20";
         }
     }
     return (
         <Link href={conversation.is_group ? route("chat.group", conversation) : route("chat.user", conversation)}
         preserveState
-        className={"pr-2 conversation-item flex items-center gap-2 p-2 text-gray-100 transition-all cursor-pointer border-1-4 border-emerald-900 hover:bg-gray-100"
+        className={"conversation-item flex items-center gap-2 p-2 pb-3 text-gray-100 transition-all cursor-pointer border-1-4 border-emerald-950 hover:bg-gray-100"
         + classes}>
             {conversation.is_user && (
                 <UserAvatar user={conversation} online={online}/>

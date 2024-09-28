@@ -33,22 +33,32 @@ export default function Authenticated({ header, children }) {
                     // If the conversation with the sender is not selected
                     // then show a notification
                     
-                emit("message.created", message);
-                if (message.sender_id === user.id) {
-                    return;
-                }
-                emit("newMessageNotification", {
-                    user: message.sender,
-                    group_id:  message.group_id,
-                    message:
-                        message.message || `Shared ${
-                            message.attachments.length === 1
+                    emit("message.created", message);
+                        if (message.sender_id === user.id) {
+                        return;
+                    }
+                    emit("newMessageNotification", {
+                        user: message.sender,
+                        group_id:  message.group_id,
+                        message:
+                            message.message || `Shared ${
+                                message.attachments.length === 1
                                 ? "an attachment"
                                 : message.attachments.length + 
                                 " attachments"
-                        }`,
+                            }`,
+                    });
                 });
-            });
+
+            if (conversation.is_group) {
+                Echo.private(`group.deleted.${conversation.id}`)
+                    .listen("groupDeleted", (e) => {
+                        console.log("GroupDeleted", e);
+                        emit("group.deleted", { id: e.id, name: e.name });
+                    }).error(e => {
+                        console.error(e);
+                    });
+            }
         });
 
         return () => {
@@ -63,7 +73,10 @@ export default function Authenticated({ header, children }) {
                         .join("-")}`;
                 }
                 Echo.leave(channel);
-            })
+                if (conversation.is_group) {
+                    Echo.leave(`group.deleted.${conversation.id}`);
+                }
+            });
         };
     }, [conversations]);
     

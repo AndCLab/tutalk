@@ -9,7 +9,12 @@ export default function SearchConversation({ value, options, onSelect }) {
     const [query, setQuery] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef(null);  // Ref to track the component container
-    const { route } = usePage(); // Access Inertia.js route function
+    const { route } = usePage();
+
+    // For Testing Purposes
+    // useEffect(() => {
+    //     console.log("options from props:", options);
+    // }, [options]);
 
     const filteredConversations =
         query === ""
@@ -25,12 +30,6 @@ export default function SearchConversation({ value, options, onSelect }) {
     const onSelected = (conversation) => {
         setSelected(conversation);
         onSelect(conversation);
-
-        // Navigate to the selected conversation
-        window.location.href = conversation.is_group 
-            ? route("chat.group", conversation) 
-            : route("chat.user", conversation);
-
         setQuery("");             
         setIsOpen(false);          
     };
@@ -82,7 +81,7 @@ export default function SearchConversation({ value, options, onSelect }) {
                     >
                         <div className="absolute max-h-96 w-full overflow-auto rounded-md bg-emerald-900 py-1 text-base shadow-lg ring-1 ring-black/5 z-[100]">
                             {filteredConversations.length === 0 ? (
-                                <div className="relative cursor-default select-none px-4 py-2 z-50 text-gray-700">
+                                <div className="relative cursor-default select-none px-4 py-2 z-50 text-gray-300">
                                     Nothing found.
                                 </div>
                             ) : (
@@ -91,7 +90,7 @@ export default function SearchConversation({ value, options, onSelect }) {
                                         <ConversationItem 
                                             conversation={conversation} 
                                             selectedConversation={selected} 
-                                            online={conversation.online} // Assuming you have online status
+                                            online={conversation.online}
                                         />
                                     </div>
                                 ))
