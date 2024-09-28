@@ -11,6 +11,11 @@ export default function SearchConversation({ value, options, onSelect }) {
     const ref = useRef(null);  // Ref to track the component container
     const { route } = usePage();
 
+    // For Testing Purposes
+    // useEffect(() => {
+    //     console.log("options from props:", options);
+    // }, [options]);
+
     const filteredConversations =
         query === ""
             ? []
@@ -20,10 +25,6 @@ export default function SearchConversation({ value, options, onSelect }) {
                     .replace(/\s+/g, "")
                     .includes(query.toLowerCase().replace(/\s+/g, ""))
             );
-
-    useEffect(() => {
-        console.log("options from props:", options);
-    }, [options]);
 
     // Handle conversation selection
     const onSelected = (conversation) => {
@@ -89,7 +90,7 @@ export default function SearchConversation({ value, options, onSelect }) {
                                         <ConversationItem 
                                             conversation={conversation} 
                                             selectedConversation={selected} 
-                                            online={conversation.online} // Assuming you have online status
+                                            online={conversation.online}
                                         />
                                     </div>
                                 ))

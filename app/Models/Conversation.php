@@ -13,6 +13,7 @@ class Conversation extends Model
         'user_id1',
         'user_id2',
         'last_message_id',
+        'is_read',
     ];
 
     public function lastMessage()
@@ -61,6 +62,7 @@ class Conversation extends Model
                 'user_id1' => $userId1,
                 'user_id2' => $userId2,
                 'last_message_id' => $message->id,
+                'is_read',
             ]);
         }
     }

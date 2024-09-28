@@ -19,3 +19,7 @@ Broadcast::channel('message.group.{groupId}', function (User $user, int $groupId
     // If current user is a member of the group with the selected groupId, allow access to channel/group
     return $user->groups->contains('id', $groupId) ? $user : null;
 });
+
+Broadcast::channel('group.deleted.{groupId}', function (User $user, int $groupId){
+    return $user->groups->contains('id', $groupId);
+});

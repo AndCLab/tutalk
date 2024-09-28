@@ -17,12 +17,12 @@ const ConversationHeader = ({ selectedConversation }) => {
     // }, [selectedConversation]);
 
     const onDeleteGroup = () => {
-        if(window.confirm("Are you sure you want to delete this group?")) {
+        if(!window.confirm("Are you sure you want to delete this group?")) {
             return;
         }
 
-        axios.delete(route("group.destroy", selectedConversation.id)).then(() => {
-            console.log(res);
+        axios.delete(route("group.destroy", selectedConversation.id)).then((res) => {
+            console.log(res.data);
         })
         .catch((err) => {
             console.log(err);
@@ -60,7 +60,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                             {selectedConversation.owner_id == authUser.id && (
                                 <>
                                     <div className="tooltip tooltip-left z-20" data-tip="Edit Group">
-                                        <button onClick={(ev) => emit("GroupMoal.show", selectedConversation)} className="text-gray-300 hover:text-gray-100">
+                                        <button onClick={(ev) => emit("GroupModal.show", selectedConversation)} className="text-gray-300 hover:text-gray-100">
                                             <PencilSquareIcon className="w-4"/>
                                         </button>
                                     </div>

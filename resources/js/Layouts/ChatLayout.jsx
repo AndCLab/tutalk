@@ -4,7 +4,7 @@ import TextInput from "@/Components/TextInput";
 import SearchConversation from '@/Components/App/SearchCOnversation';
 import { useEventBus } from '@/EventBus';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 const ChatLayout = ({ children }) => {
@@ -52,9 +52,24 @@ const ChatLayout = ({ children }) => {
     useEffect(() => {
         const offCreated = on("message.created", messageCreated);
         const offDeleted = on("message.deleted", messageDeleted);
+        const offModalShow = on("GroupModal.show", (group) => {
+            setShowGroupModal(true);
+        });
+        const offGroupDelete = on("group.deleted", ({id, name}) => {
+            setLocalConversations((oldConversations) => {
+                return oldConversations.filter((con) => con.id != id);
+            });
+            // emit('toast.show', `Group ${name} was deleted`);
+            if (!selectedConversation || selectedConversation.is_group && selectedConversation.id == id) {
+                router.visit(route("dashboard"));
+            }
+        });
+
         return () => {
             offCreated();
             offDeleted();
+            offModalShow();
+            offGroupDelete();
         };
     }, [on]);
 
