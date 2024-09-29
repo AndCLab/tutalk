@@ -48,8 +48,8 @@ class GroupController extends Controller
             abort(403);   
         }
 
-        DeleteGroupJob::dispatch($group)->delay(now()->addSeconds(5));
+        DeleteGroupJob::dispatch($group);
 
-        return response()->json(['message' => 'Group delete was scheduled and the Group will be deleted soon']);
+        return response()->json(['message' => 'Deleting messages from group...']);
     }
 }

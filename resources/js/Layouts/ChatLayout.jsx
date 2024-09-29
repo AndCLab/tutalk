@@ -15,7 +15,7 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState({});
     const [showGroupModal, setShowGroupModal] = useState(false);
-    const [selectedUsers, setSelectedUsers] = useState([]); // Store selected users from UserPicker
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const { on } = useEventBus();
     const users = conversations.filter((c) => !c.is_group);
 
@@ -56,11 +56,13 @@ const ChatLayout = ({ children }) => {
             setShowGroupModal(true);
         });
         const offGroupDelete = on("group.deleted", ({id, name}) => {
+            console.log("Group deleted event received:", id, name);
             setLocalConversations((oldConversations) => {
                 return oldConversations.filter((con) => con.id != id);
             });
             // emit('toast.show', `Group ${name} was deleted`);
             if (!selectedConversation || selectedConversation.is_group && selectedConversation.id == id) {
+                console.log("Redirecting to dashboard");
                 router.visit(route("dashboard"));
             }
         });
@@ -122,6 +124,14 @@ const ChatLayout = ({ children }) => {
             Echo.leave("online");
         };
     }, []);
+
+
+    // For Testing Purposes
+    // useEffect(() => {
+    //     console.log("sortedConversations from props:", sortedConversations);
+    //     console.log("filteredConversations from props:", filteredConversations);
+    //     console.log("localConversations from state:", localConversations);
+    // }, [sortedConversations]);
 
     return (
         <>

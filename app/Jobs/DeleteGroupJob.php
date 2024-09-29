@@ -34,7 +34,8 @@ class DeleteGroupJob implements ShouldQueue
         $this->group->save();
 
         // Iterate all messages and delete them
-        $this->group->messages->each->delete();
+        // $this->group->messages->each->delete();
+        \App\Models\Message::where('group_id', $id)->delete();
 
         // Remove all the users from the group
         $this->group->users()->detach();
@@ -44,5 +45,8 @@ class DeleteGroupJob implements ShouldQueue
 
         // Broadcast Event
         GroupDeleted::dispatch($id, $name);
+
+        // For logging
+        info("GroupDeleted event dispatched for group: $name");
     }
 }
