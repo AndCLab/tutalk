@@ -15,16 +15,20 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState({});
     const [showGroupModal, setShowGroupModal] = useState(false);
-    const [selectedUsers, setSelectedUsers] = useState([]); // Store selected users from UserPicker
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const { on } = useEventBus();
     const users = conversations.filter((c) => !c.is_group);
 
     const isUserOnline = (userId) => onlineUsers[userId];
 
-    // Filter for conversations with messages
+    // Filters for conversations including those without messages or with attachments and new Groups with null last_messages
     const filteredConversations = localConversations.filter(
-        (conversation) => conversation.last_message !== null
+        (conversation) => 
+            conversation.last_message !== null || 
+            conversation.is_group || 
+            (conversation.last_message && conversation.last_message.attachments && conversation.last_message.attachments.length > 0)
     );
+
 
     const messageCreated = (message) => {
         setLocalConversations((oldUsers) => {
@@ -55,12 +59,19 @@ const ChatLayout = ({ children }) => {
         const offModalShow = on("GroupModal.show", (group) => {
             setShowGroupModal(true);
         });
+        const offGroupCreated = on("group.created", (newGroup) => {
+            setLocalConversations((prevConversations) => [
+                ...prevConversations,
+                newGroup,
+            ]);
+        });
         const offGroupDelete = on("group.deleted", ({id, name}) => {
             setLocalConversations((oldConversations) => {
                 return oldConversations.filter((con) => con.id != id);
             });
             // emit('toast.show', `Group ${name} was deleted`);
             if (!selectedConversation || selectedConversation.is_group && selectedConversation.id == id) {
+                console.log("Conversation no longer exists, Redirecting to index...");
                 router.visit(route("dashboard"));
             }
         });
@@ -69,6 +80,7 @@ const ChatLayout = ({ children }) => {
             offCreated();
             offDeleted();
             offModalShow();
+            offGroupCreated();
             offGroupDelete();
         };
     }, [on]);
@@ -76,10 +88,12 @@ const ChatLayout = ({ children }) => {
     useEffect(() => {
         setSortedConversations(
             filteredConversations.sort((a, b) => {
+                // Sort groups and users based on last_message_date 
                 if (a.last_message_date && b.last_message_date) {
                     return b.last_message_date.localeCompare(a.last_message_date);
                 }
-                return 0;
+                // Place groups first or handle groups with no last message
+                return a.is_group ? -1 : 1;
             })
         );
     }, [localConversations]);
@@ -122,6 +136,14 @@ const ChatLayout = ({ children }) => {
             Echo.leave("online");
         };
     }, []);
+
+
+    // For Testing Purposes
+    // useEffect(() => {
+    //     console.log("sortedConversations from props:", sortedConversations);
+    //     console.log("filteredConversations from props:", filteredConversations);
+    //     console.log("localConversations from state:", localConversations);
+    // }, [sortedConversations]);
 
     return (
         <>

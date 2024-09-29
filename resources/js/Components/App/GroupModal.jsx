@@ -29,14 +29,15 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
             put(route("group.update", group_id), {
                 onSuccess: () => {
                     closeModal();
-                    emit("toast.show", `Group "${data.name}" was updated`);
+                    // emit("toast.show", `Group "${data.name}" was updated`);
+                    emit("group.created", newGroup);
                 },
             });
             return;
         }
         post(route("group.store"), {
             onSuccess: () => {
-                emit("toast.show", `Group "${data.name}" was created`);
+                // emit("toast.show", `Group "${data.name}" was created`);
                 closeModal();
             },
         });
