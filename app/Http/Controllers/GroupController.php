@@ -15,6 +15,8 @@ class GroupController extends Controller
     public function store(StoreGroupRequest $request)
     {
         $data = $request->validated();
+        $data['owner_id'] = $request->user()->id;
+        
         $user_ids = $data['user_ids'] ?? [];
         $group = Group::create($data);
         $group->users()->attach(array_unique([$request->user()->id, ...$user_ids]));
@@ -26,17 +28,18 @@ class GroupController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateGroupRequest $request, Group $group)
-    {
-        $data = $request->validated();
-        $user_ids = $data['user_ids'] ?? [];
-        $group->updated($data);
-        
-        // Remmoves all users and attaches new users
-        $group->users()->detach();
-        $group->users()->attach(array_unique([$request->user()->id, ...$user_ids]));
+{
+    $data = $request->validated();
+    $user_ids = $data['user_ids'] ?? [];
+    unset($data['owner_id']);
+    $group->update($data);
 
-        return redirect()->back();
-    }
+    // Removes all users and attaches new users
+    $group->users()->detach();
+    $group->users()->attach(array_unique([$request->user()->id, ...$user_ids]));
+
+    return redirect()->back();
+}
 
     /**
      * Remove the specified resource from storage.
