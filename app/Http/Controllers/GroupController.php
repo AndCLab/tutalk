@@ -29,6 +29,11 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
 {
+    // Check if the current user is authorized to update the group
+    if ($group->owner_id !== $request->user()->id) {
+        abort(403, 'Unauthorized action.');
+    }
+
     $data = $request->validated();
     $user_ids = $data['user_ids'] ?? [];
     unset($data['owner_id']);
