@@ -24,7 +24,7 @@ const ChatLayout = ({ children }) => {
     // Filters for conversations including those without messages or with attachments and new Groups with null last_messages
     const filteredConversations = localConversations.filter(
         (conversation) => 
-            conversation.last_message !== null || 
+            conversation.last_message_date !== null || 
             conversation.is_group || 
             (conversation.last_message && conversation.last_message.attachments && conversation.last_message.attachments.length > 0)
     );
@@ -88,15 +88,20 @@ const ChatLayout = ({ children }) => {
     useEffect(() => {
         setSortedConversations(
             filteredConversations.sort((a, b) => {
-                // Sort groups and users based on last_message_date 
+                // First check if both conversations have last messages
                 if (a.last_message_date && b.last_message_date) {
                     return b.last_message_date.localeCompare(a.last_message_date);
                 }
-                // Place groups first or handle groups with no last message
-                return a.is_group ? -1 : 1;
+                // If one of the conversations has no last message, use created_at as fallback
+                const aDate = a.last_message_date || a.created_at;
+                const bDate = b.last_message_date || b.created_at;
+                
+                // Compare by last_message_date or fallback created_at
+                return bDate.localeCompare(aDate);
             })
         );
     }, [localConversations]);
+    
 
     useEffect(() => {
         setLocalConversations(conversations);

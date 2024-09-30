@@ -26,7 +26,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
     const createOrUpdateGroup = (e) => {
         e.preventDefault();
         if (group.id) {
-            put(route("group.update", group_id), {
+            put(route("group.update", group.id), {
                 onSuccess: () => {
                     closeModal();
                     // emit("toast.show", `Group "${data.name}" was updated`);
@@ -72,8 +72,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                     <TextInput 
                         id="name" 
                         className="mt-1 block w-full" 
-                        value={data.name} 
-                        disabled={!!group.id} 
+                        value={data.name}  
                         onChange={(e) => setData("name", e.target.value)}
                         required
                     />
@@ -85,8 +84,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                         id="description" 
                         className="mt-1 block w-full" 
                         value={data.description} 
-                        disabled={!!group.id} 
-                        onChange={(e) => setData("description", e.target.value)}
+                        onChange={(e) => setData("description", e.target.value)}  // Allow editing
                     />
                     <InputError className="mt-2" message={errors.description} />
                 </div>
