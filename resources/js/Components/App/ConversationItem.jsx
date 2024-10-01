@@ -5,6 +5,8 @@ import UserOptionsDropdown from "./UserOptionsDropdown";
 import { formatMessageDateShort } from "@/helpers";
 import { useEffect } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import GroupOptionsDropdown from  "./GroupOptionsDropdown";
+
 
 const ConversationItem = ({conversation, selectedConversation=null, online=null}) => {
     const page = usePage();
@@ -59,7 +61,10 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
                 <UserOptionsDropdown conversation={conversation}/>
             )}
             {conversation.is_group && (
-                <UserOptionsDropdown/>
+                <GroupOptionsDropdown
+                    selectedConversation={conversation}
+                    isOwner={conversation.owner_id === currentUser.id}
+                />
             )}
         </Link>
     );
