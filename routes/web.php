@@ -18,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/group', [GroupController::class, 'store'])->name('group.store');
     Route::put('/group/{group}', [GroupController::class, 'update'])->name('group.update');
     Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
+    Route::delete('/group/{id}/leave', [GroupController::class, 'leave'])->name('group.leave');
 });
 
 Route::middleware('auth')->group(function () {

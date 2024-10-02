@@ -60,4 +60,24 @@ class GroupController extends Controller
 
         return response()->json(['message' => 'Deleting messages from group...']);
     }
+
+    public function leave($id)
+    {
+        $group = Group::findOrFail($id);
+
+        // Check if the user is part of the group
+        if (!$group->users->contains(auth()->id())) {
+            return response()->json(['error' => 'You are not part of this group.'], 403);
+        }
+
+        // Prevent the owner from leaving their own group
+        if ($group->owner_id == auth()->id()) {
+            return response()->json(['error' => 'Group owners cannot leave their own group.'], 403);
+        }
+
+        // Remove the user from the group
+        $group->users()->detach(auth()->id());
+
+        return response()->json(['message' => 'You have successfully left the group.']);
+    }
 }
