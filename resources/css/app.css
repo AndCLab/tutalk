@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -121,4 +123,98 @@
 .chat-image {
     margin: 0;
     padding: 0;
-  }
+}
+
+/* Custom Login Background */
+.custom-login-bg {
+    background: linear-gradient(-45deg, #00321f, #00643e, #3e6868, #0c781e);
+    background-size: 400% 400%;
+    animation: gradient 30s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.custom-login-bg-images {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Custom Image Frame */
+.custom-frame {
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.custom-frame:hover .image {
+    transform: scale(1.05); 
+}
+
+/* Styles for the images inside the slideshow */
+.slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.slideshow img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.2); /* Slight zoom-in */
+    transition: opacity 1s ease-in-out, transform 8s ease-in-out;
+}
+
+.slideshow img.active {
+    opacity: 1;
+    transform: scale(1); /* Zoom out */
+}
+
+/* Full-screen gradient overlay */
+.bg-gradient-to-r {
+    background: linear-gradient(-45deg, #00321f, #00643e, #3e6868, #0c781e);
+    opacity: 0.3; /* Control visibility */
+}
+
+/* Custom frame hover animation */
+.custom-frame:hover .image {
+    transform: scale(1.05);
+}
+
+/* Z-index management */
+.z-10 {
+    z-index: 10; /* Content sits above the slideshow */
+}
+
+.z-1 {
+    z-index: 1; /* Gradient layer above slideshow */
+}
+
+.z-0 {
+    z-index: 0; /* Slideshow background */
+}

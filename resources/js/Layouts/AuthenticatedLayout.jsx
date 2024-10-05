@@ -94,7 +94,7 @@ export default function Authenticated({ header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-gray-100">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    TUTEE
+                                    <h1 className="text-3xl font-bold font-anton">TUTALK</h1>
                                 </NavLink>
                             </div>
                         </div>

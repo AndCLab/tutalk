@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import ApplicationLogo from '@/Components/ApplicationLogo';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -29,6 +30,16 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
+                    <div className="flex justify-center">
+                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500 p-0" />
+                        <div className="items-center hidden sm:flex text-gray-100">
+                            <h1 className="text-5xl text-white font-bold font-anton">TUTALK</h1>
+                        </div>
+                    </div>
+                    <div className="justify-center flex">
+                        <img src="/img/DrawKit1.png" className="h-64 hover:scale-110 transition duration-400"></img>
+                    </div>
+                    <h1 className="font-bold text-white text-xl text-center p-3 mb-3 border-b">Login using your TUTEE account:</h1>
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
@@ -68,7 +79,7 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
+                        <span className="ms-2 text-sm text-white">Remember me</span>
                     </label>
                 </div>
 
@@ -76,7 +87,7 @@ export default function Login({ status, canResetPassword }) {
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm text-white hover:text-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Forgot your password?
                         </Link>
