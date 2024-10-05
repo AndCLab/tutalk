@@ -112,51 +112,28 @@ class MessageController extends Controller
 
     public function destroy(Message $message)
     {
-    // Check if the user is the owner of the message
-        if ($message->sender_id !== auth()->id()) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
-
-        $group = null;
-        $conversation = null;
-        $lastMessage = null;
-
-        // Check if the message is a part of a group or conversation, and if it's the last message
-        if ($message->group_id) {
-            $group = Group::where('last_message_id', $message->id)->first();
-            Group::where('last_message_id', $message->id)->update(['last_message_id' => null]);
-        } else {
-            $conversation = Conversation::where('last_message_id', $message->id)->first();
-        }
-
-        // Delete the message
-        $message->delete();
-
-        // If the deleted message was the last in a group or conversation, update the last message
+        // Check if the message is part of a group conversation
+        $group = Group::where('last_message_id', $message->id)->first();
+        
         if ($group) {
-            // Repopulate $group with the latest database data
-            $group = Group::find($group->id);
-            $lastMessage = $group->lastMessage;
-
-                // If the deleted message is the ONLY message in the grou[]
-                if (!$lastMessage) {
-                    $group->last_message_id = null;
-                }
-
-        } elseif ($conversation) {
-            // Repopulate $conversation with the latest database data
-            $conversation = Conversation::find($conversation->id);
-            $lastMessage = $conversation->lastMessage;
-
-                // If the deleted message is the ONLY message in the grou[]
-                if (!$lastMessage) {
-                    $conversation->last_message_id = null;
-                }
+            // If it's in a group, update the group's last_message_id or handle it accordingly
+            $group->last_message_id = null; // or set to another valid message ID
+            $group->save();
+        } else {
+            // If it's not in a group, check if it's part of any other conversation
+            // Example: Update any conversation records if necessary
+            $conversation = Conversation::where('last_message_id', $message->id)->first();
             
+            if ($conversation) {
+                // Update the last message for the conversation if needed
+                $conversation->last_message_id = null; // or set to another valid message ID
+                $conversation->save();
+            }
         }
 
-        // Return the updated last message (or null if no last message exists)
-        return response()->json(['message' => $lastMessage ? new MessageResource($lastMessage) : null]);
+        // Now delete the message
+        $message->delete();
     }
+
 }
 
