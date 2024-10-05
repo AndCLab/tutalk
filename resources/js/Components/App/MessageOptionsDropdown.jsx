@@ -3,22 +3,43 @@ import { EllipsisVerticalIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 import axios from "axios";
 import { useEventBus } from "@/EventBus";
+import { useEffect, useState } from "react";
 
 export default function MessageOptionsDropdown({ message }) {
+    const [messages, setMessages] = useState([]);
     const {emit} = useEventBus();
+
+    // For Testing 
+    useEffect(() => {
+        console.log("message from props:", message);
+    }, [message]);
+
     const onMessageDelete = () => {
         console.log("Delete message");
-        // Send axios post request to delete message and show notification on success
         axios
             .delete(route("message.destroy", message.id))
             .then((res) => {
-                // console.log(res.data);
-                emit("message.deleted", {message, prevMessage: res.data.message,});
+                emit("message.deleted", { message, prevMessage: res.data.message });
+    
+                // Update local messages state
+                setMessages((prevMessages) => {
+                    const updatedMessages = prevMessages.filter((msg) => msg.id !== message.id);
+                    
+                    // Check if there are remaining messages
+                    if (updatedMessages.length === 0) {
+                        // Handle the case where the conversation is now empty
+                        console.log("The conversation is now empty.");
+                        // You might want to set a state for the empty conversation here
+                    }
+                    
+                    return updatedMessages;
+                });
             })
             .catch((err) => {
                 console.error(err);
             });
     };
+    
 
     return (
         <div className="absolute right-full top-1/2 -translate-y-1/2 hover:text-gray-100 z-10">

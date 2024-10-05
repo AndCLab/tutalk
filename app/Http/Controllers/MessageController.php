@@ -124,6 +124,7 @@ class MessageController extends Controller
         // Check if the message is a part of a group or conversation, and if it's the last message
         if ($message->group_id) {
             $group = Group::where('last_message_id', $message->id)->first();
+            Group::where('last_message_id', $message->id)->update(['last_message_id' => null]);
         } else {
             $conversation = Conversation::where('last_message_id', $message->id)->first();
         }
@@ -136,10 +137,22 @@ class MessageController extends Controller
             // Repopulate $group with the latest database data
             $group = Group::find($group->id);
             $lastMessage = $group->lastMessage;
+
+                // If the deleted message is the ONLY message in the grou[]
+                if (!$lastMessage) {
+                    $group->last_message_id = null;
+                }
+
         } elseif ($conversation) {
             // Repopulate $conversation with the latest database data
             $conversation = Conversation::find($conversation->id);
             $lastMessage = $conversation->lastMessage;
+
+                // If the deleted message is the ONLY message in the grou[]
+                if (!$lastMessage) {
+                    $conversation->last_message_id = null;
+                }
+            
         }
 
         // Return the updated last message (or null if no last message exists)
