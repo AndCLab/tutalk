@@ -31,19 +31,16 @@ export default function Login({ status, canResetPassword }) {
             <form onSubmit={submit}>
                 <div>
                     <div className="flex justify-center">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500 p-0" />
+                        <ApplicationLogo className="w-16 h-16 fill-current text-gray-500 p-0" />
                         <div className="items-center hidden sm:flex text-gray-100">
                             <h1 className="text-5xl text-white font-bold font-anton">TUTALK</h1>
                         </div>
                     </div>
-                    <div className="justify-center flex">
-                        <img src="/img/DrawKit1.png" className="h-64 hover:scale-110 transition duration-400"></img>
-                    </div>
                     <h1 className="font-bold text-white text-xl text-center p-3 mb-3 border-b">Login using your TUTEE account:</h1>
-                    <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
                         id="email"
+                        placeholder="Enter your email"
                         type="email"
                         name="email"
                         value={data.email}
@@ -57,10 +54,10 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
                         id="password"
+                        placeholder="Enter your password"
                         type="password"
                         name="password"
                         value={data.password}

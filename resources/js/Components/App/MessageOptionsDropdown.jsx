@@ -10,9 +10,9 @@ export default function MessageOptionsDropdown({ message }) {
     const {emit} = useEventBus();
 
     // For Testing 
-    useEffect(() => {
-        console.log("message from props:", message);
-    }, [message]);
+    // useEffect(() => {
+    //     console.log("message from props:", message);
+    // }, [message]);
 
     const onMessageDelete = () => {
         console.log("Delete message");

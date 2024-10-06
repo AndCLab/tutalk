@@ -9,6 +9,7 @@ import UserPicker from "@/Components/App/UserPicker";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEventBus } from "@/EventBus";
 import { useEffect, useState } from "react";
+import EditTextInput from "../EditTextInput";
 
 export default function GroupModal({ show = false, onClose = () => {} }) {
     const page = usePage();
@@ -69,7 +70,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                 </h2>
                 <div className="mt-8">
                     <InputLabel htmlFor="name" value="Name" />
-                    <TextInput 
+                    <EditTextInput 
                         id="name" 
                         className="mt-1 block w-full" 
                         value={data.name}  
@@ -80,7 +81,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                 </div>
                 <div className="mt-8">
                     <InputLabel htmlFor="description" value="Description" />
-                    <TextInput 
+                    <EditTextInput 
                         id="description" 
                         className="mt-1 block w-full" 
                         value={data.description} 
