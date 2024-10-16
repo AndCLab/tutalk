@@ -122,18 +122,22 @@ const MessageInput = ({ conversation = null }) => {
                         onSend={onSendClick}
                         onChange={(ev) => setNewMessage(ev.target.value)}
                     />
-                    <button onClick={onSendClick} disabled={messageSending} className="hover:bg-emerald-700 hover:border-emerald-700 border-emerald-800 bg-emerald-800 btn btn-info rounded-1-none hover:text-green-800 ml-3">
-                        <PaperAirplaneIcon className="w-6 fill-gray-100" />
-                        <span className="hidden sm:inline text-gray-100">Send</span>
+                    <button onClick={onSendClick} disabled={messageSending} className="hover:bg-emerald-700 hover:border-emerald-700 border-emerald-800 bg-emerald-800 btn btn-info rounded-full hover:text-green-800 ml-3">
+                        {!messageSending && (
+                            <div className="flex items-center">
+                                <span className="hidden sm:inline text-gray-100 pr-2">Send</span>
+                                <PaperAirplaneIcon className="w-6 fill-gray-100" />
+                            </div>  
+                        )}
+                        {/* Loading Spinner */}
+                        {messageSending && (
+                            <div className="flex items-center justify-center mt-2">
+                                <BeatLoader color="#4CAF50" loading={messageSending} size={10} />
+                            </div>
+                        )}
                     </button>
                 </div>
                 
-                {/* Loading Spinner */}
-                {messageSending && (
-                    <div className="flex items-center justify-center mt-2">
-                        <BeatLoader color="#4CAF50" loading={messageSending} size={10} />
-                    </div>
-                )}
 
                 {inputErrorMessage && (
                     <p className="text-xs text-red-400">{inputErrorMessage}</p>

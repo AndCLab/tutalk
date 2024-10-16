@@ -144,11 +144,11 @@ const ChatLayout = ({ children }) => {
 
 
     // For Testing Purposes
-    // useEffect(() => {
-    //     console.log("sortedConversations from props:", sortedConversations);
-    //     console.log("filteredConversations from props:", filteredConversations);
-    //     console.log("localConversations from state:", localConversations);
-    // }, [sortedConversations]);
+    useEffect(() => {
+        console.log("sortedConversations from props:", sortedConversations);
+        console.log("filteredConversations from props:", filteredConversations);
+        console.log("localConversations from state:", localConversations);
+    }, [sortedConversations]);
 
     return (
         <>
