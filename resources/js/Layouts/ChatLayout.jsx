@@ -18,8 +18,9 @@ const ChatLayout = ({ children }) => {
     const [selectedUsers, setSelectedUsers] = useState([]);
     const { on } = useEventBus();
     const users = conversations.filter((c) => !c.is_group);
-
     const isUserOnline = (userId) => onlineUsers[userId];
+
+    // Decalarations for lazy loading
 
     // Filters for conversations including those without messages or with attachments and new Groups with null last_messages
     const filteredConversations = localConversations.filter(
@@ -144,16 +145,16 @@ const ChatLayout = ({ children }) => {
 
 
     // For Testing Purposes
-    useEffect(() => {
-        console.log("sortedConversations from props:", sortedConversations);
-        console.log("filteredConversations from props:", filteredConversations);
-        console.log("localConversations from state:", localConversations);
-    }, [sortedConversations]);
+    // useEffect(() => {
+    //     console.log("sortedConversations from props:", sortedConversations);
+    //     console.log("filteredConversations from props:", filteredConversations);
+    //     console.log("localConversations from state:", localConversations);
+    // }, [sortedConversations]);
 
     return (
         <>
             <div className="flex-1 w-full flex overflow-hidden">
-                <div className={`transition-all w-full sm:w-[220px] md:w-[420px] bg-emerald-900 border-r-2 border-r-emerald-950 flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""}`}>
+                <div className={`transition-all w-full sm:w-[220px] md:w-[320px] bg-emerald-800 flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""}`}>
                     <div className="flex p-2">
                         <SearchConversation 
                             value={selectedUsers} 
@@ -166,7 +167,7 @@ const ChatLayout = ({ children }) => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex-1 overflow-auto bg-emerald-800 border-2 border-emerald-900">
+                    <div className="flex-1 overflow-auto bg-emerald-700">
                         {sortedConversations.map((conversation) => (
                             <ConversationItem 
                                 key={`${conversation.is_group ? "group_" : "user_"}${conversation.id}`}

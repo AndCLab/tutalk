@@ -14,79 +14,72 @@ export default function Authenticated({ header, children }) {
     const {emit} = useEventBus();
 
     useEffect(() => {
+        if (!conversations || conversations.length === 0) {
+            console.log("No conversations to listen for.");
+            return; // Exit the effect if there are no conversations
+        }
+    
         conversations.forEach((conversation) => {
             let channel = `message.group.${conversation.id}`;
             if (conversation.is_user) {
                 channel = `message.user.${[
                     parseInt(user.id),
                     parseInt(conversation.id),
-                ].sort((a, b) => a - b)
-            .join("-")}`;
+                ]
+                .sort((a, b) => a - b)
+                .join("-")}`;
             }
-            // console.log("Start listening on channel ", channel);
-            Echo.private(channel).error((error) => {
+    
+            Echo.private(channel)
+                .error((error) => {
                     console.error(error);
                 })
                 .listen("SocketMessage", (e) => {
                     console.log("SocketMessage", e);
                     const message = e.message;
-                    // If the conversation with the sender is not selected
-                    // then show a notification
-                    
+    
+                    // Emit new message event if the conversation is not selected
                     emit("message.created", message);
-                        if (message.sender_id === user.id) {
+                    if (message.sender_id === user.id) {
                         return;
                     }
                     emit("newMessageNotification", {
                         user: message.sender,
-                        group_id:  message.group_id,
-                        message:
-                            message.message || `Shared ${
-                                message.attachments.length === 1
+                        group_id: message.group_id,
+                        message: message.message || `Shared ${
+                            message.attachments.length === 1
                                 ? "an attachment"
-                                : message.attachments.length + 
-                                " attachments"
-                            }`,
+                                : message.attachments.length + " attachments"
+                        }`,
                     });
                 });
-
+    
             if (conversation.is_group) {
                 Echo.private(`group.deleted.${conversation.id}`)
                     .listen("GroupDeleted", (e) => {
                         console.log("GroupDeleted", e);
                         emit("group.deleted", { id: e.id, name: e.name });
-                    }).error(e => {
-                        console.error(e);
+                    })
+                    .error((error) => {
+                        console.error(error);
                     });
             }
         });
-
+    
+        // Cleanup listener when component unmounts or conversations change
         return () => {
-            conversations.forEach((conversation) => {
-                let channel = `message.group.${conversation.id}`;
-                if (conversation.is_user) {
-                    channel = `message.user.${[
-                        parseInt(user.id),
-                        parseInt(conversation.id),
-                    ]
-                        .sort((a, b) => a - b)
-                        .join("-")}`;
-                }
-                Echo.leave(channel);
-                if (conversation.is_group) {
-                    Echo.leave(`group.deleted.${conversation.id}`);
-                }
-            });
+            Echo.leaveChannel();
         };
-    }, [conversations]);
+    }, [conversations, user]);
+    
     
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-100 flex flex-col h-screen">
-            <nav className="bg-emerald-900 dark:bg-emerald-950 border-b border-emerald-950 dark:border-emerald-950">
+            <nav className="bg-emerald-900 dark:bg-emerald-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
-                            <div className="sm:flex text-gray-100">
+                            <div className="flex text-gray-100">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     <h1 className="text-3xl text-white font-bold font-anton">TUTALK</h1>
                                 </NavLink>

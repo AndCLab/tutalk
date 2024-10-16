@@ -93,8 +93,8 @@ const MessageInput = ({ conversation = null }) => {
         <div className="flex flex-wrap items-center border-t-2 border-gray-300 bg-gray-300 py-3">
             {/* Attachments and Image Upload Section */}
             <div className="xs:flex:none xs:order-1 p-2">
-                <button className="p-1 text-gray-600 hover:text-emerald-800 relative">
-                    <PaperClipIcon className="w-6" />
+                <button className="p-1 text-gray-600 hover:text-emerald-700 relative">
+                    <PaperClipIcon className="hidden sm:block w-6" />
                     <input 
                         type="file"
                         multiple
@@ -102,8 +102,8 @@ const MessageInput = ({ conversation = null }) => {
                         className="absolute left-0 top-0 right-0 bottom-0 z-0 opacity-0 cursor-pointer"
                     />
                 </button>
-                <button className="p-1 text-gray-600 hover:text-emerald-800 relative">
-                    <PhotoIcon className="w-6" />
+                <button className="p-1 text-gray-600 hover:text-emerald-700 relative">
+                    <PhotoIcon className="hidden sm:block w-6" />
                     <input 
                         type="file"
                         multiple
@@ -182,16 +182,16 @@ const MessageInput = ({ conversation = null }) => {
             
             {/* Emojis and Reactions Section */}
             <div className="order-3 xs:order-3 p-2 flex">
-                <Popover className="relative">
-                    <Popover.Button className="p-1 text-gray-600 hover:text-emerald-800">
+                <Popover className="hidden sm:block relative">
+                    <Popover.Button className="p-1 text-gray-600 hover:text-emerald-700">
                         <FaceSmileIcon className="w-6 h-6" />
                     </Popover.Button>
                     <Popover.Panel className="absolute z-10 right-0 bottom-full">
                         <EmojiPicker theme="dark" onEmojiClick={ev => setNewMessage(newMessage + ev.emoji)} />
                     </Popover.Panel>
                 </Popover>
-                <button onClick={onLikeClick} className="p-1 text-gray-600 hover:text-emerald-800">
-                    <HandThumbUpIcon className="w-6 h-6" />
+                <button onClick={onLikeClick} className="p-1 text-gray-600 hover:text-emerald-700">
+                    <HandThumbUpIcon className="hidden sm:block w-6 h-6" />
                 </button>
             </div>
         </div>
