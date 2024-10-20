@@ -29,7 +29,7 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
     return (
         <Link href={conversation.is_group ? route("chat.group", conversation) : route("chat.user", conversation)}
         preserveState
-        className={"conversation-item flex items-center gap-2 p-2 pb-3 text-gray-100 transition-all cursor-pointer border-1-4 border-emerald-950 hover:bg-emerald-900 focus:bg-emerald-700"
+        className={"conversation-item flex items-center gap-2 p-2 pb-3 text-gray-100 transition-all cursor-pointer border-1-4 border-emerald-950 hover:bg-emerald-800 focus:bg-emerald-700"
         + classes}>
             {conversation.is_user && (
                 <UserAvatar user={conversation} online={online}/>
@@ -38,7 +38,7 @@ const ConversationItem = ({conversation, selectedConversation=null, online=null}
             <div className={`flex-1 text-xs max-w-full overflow-hidden` + (conversation.is_user && conversation.blocked_at ? "opacity-50" : "")}>
                 <div className="flex gap-1 justify-between items-center">
                     <div className="flex items-center gap-1">
-                        <h3 className="text-base font-semibold overflow-hidden text-nowrap text-ellipsis">{conversation.name}</h3>
+                        <h3 className="text-base font-semibold overflow-hidden text-nowrap text-ellipsis max-w-40">{conversation.name}</h3>
                         {conversation.verify_status && (
                             <CheckCircleIcon className="w-4 h-4 text-green-500"/>
                         )}

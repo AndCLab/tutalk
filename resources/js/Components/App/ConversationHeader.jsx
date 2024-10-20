@@ -32,7 +32,7 @@ const ConversationHeader = ({ selectedConversation }) => {
     return (
         <>
             {selectedConversation && (
-                <div className="p-3 flex justify-between items-center border-b-2 border-emerald-900 bg-emerald-900">
+                <div className="p-3 flex justify-between items-center bg-emerald-800">
                     <div className="flex items-center gap-3">
                         <Link href={route("dashboard")} className="inline-block sm:hidden">
                             <ArrowLeftIcon className="w-6 text-gray-100" />
@@ -42,7 +42,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                         )}
                         {selectedConversation.is_group && <GroupAvatar />}
                         <div className="flex">
-                            <h3 className="text-white">{selectedConversation.name}</h3>
+                            <h3 className="text-white truncate text-ellipsis overflow-hidden">{selectedConversation.name}</h3>
                             {selectedConversation.is_group && (
                                 <div className="text-gray-400 pl-3">
                                     <GroupUsersPopover  

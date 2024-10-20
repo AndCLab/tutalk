@@ -13,6 +13,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/message', [MessageController::class, 'store'])->name('message.store');
     Route::delete('/message/{message}', [MessageController::class, 'destroy'])->name('message.destroy');
     Route::get('/message/older/{message}', [MessageController::class, 'loadOlder'])->name('message.loadOlder');
+    Route::get('/conversations/{conversationItem}/load-older', [ConversationController::class, 'loadOlderItems'])
+    ->name('conversations.loadOlder');
     
     // Group CRUD routes
     Route::post('/group', [GroupController::class, 'store'])->name('group.store');

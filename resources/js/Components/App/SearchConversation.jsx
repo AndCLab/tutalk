@@ -59,7 +59,7 @@ export default function SearchConversation({ value, options, onSelect }) {
         <>
             <div className="relative w-full z-10" ref={ref}>
                 <input
-                    className="border-gray-300 rounded-md shadow-sm block h-10 w-full"
+                    className="border-gray-300 rounded-lg shadow-sm block h-10 w-full"
                     placeholder="Search conversations..."
                     value={query}
                     onChange={handleInputChange}

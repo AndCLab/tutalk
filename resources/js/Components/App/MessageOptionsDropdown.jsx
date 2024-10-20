@@ -10,9 +10,9 @@ export default function MessageOptionsDropdown({ message }) {
     const {emit} = useEventBus();
 
     // For Testing 
-    useEffect(() => {
-        console.log("message from props:", message);
-    }, [message]);
+    // useEffect(() => {
+    //     console.log("message from props:", message);
+    // }, [message]);
 
     const onMessageDelete = () => {
         console.log("Delete message");
@@ -28,7 +28,7 @@ export default function MessageOptionsDropdown({ message }) {
                     // Check if there are remaining messages
                     if (updatedMessages.length === 0) {
                         // Handle the case where the conversation is now empty
-                        console.log("The conversation is now empty.");
+                        // console.log("The conversation is now empty.");
                         // You might want to set a state for the empty conversation here
                     }
                     

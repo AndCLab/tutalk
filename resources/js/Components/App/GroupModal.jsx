@@ -9,6 +9,7 @@ import UserPicker from "@/Components/App/UserPicker";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEventBus } from "@/EventBus";
 import { useEffect, useState } from "react";
+import EditTextInput from "../EditTextInput";
 
 export default function GroupModal({ show = false, onClose = () => {} }) {
     const page = usePage();
@@ -27,18 +28,33 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
         e.preventDefault();
         if (group.id) {
             put(route("group.update", group.id), {
+                data: {
+                    name: data.name,
+                    description: data.description,
+                    user_ids: data.user_ids,
+                },
                 onSuccess: () => {
                     closeModal();
-                    // emit("toast.show", `Group "${data.name}" was updated`);
-                    emit("group.created", newGroup);
+                    emit("toast.show", `Group "${data.name}" was updated successfully!`); // Emit success toast for update
+                },
+                onError: () => {
+                    emit("toast.show", `Failed to update group "${data.name}".`); // Emit error toast if needed
                 },
             });
             return;
         }
         post(route("group.store"), {
+            data: {
+                name: data.name,
+                description: data.description,
+                user_ids: data.user_ids,
+            },
             onSuccess: () => {
-                // emit("toast.show", `Group "${data.name}" was created`);
                 closeModal();
+                emit("toast.show", `Group "${data.name}" was created successfully!`); // Emit success toast for creation
+            },
+            onError: () => {
+                emit("toast.show", `Failed to create group "${data.name}".`); // Emit error toast if needed
             },
         });
     };
@@ -69,7 +85,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                 </h2>
                 <div className="mt-8">
                     <InputLabel htmlFor="name" value="Name" />
-                    <TextInput 
+                    <EditTextInput 
                         id="name" 
                         className="mt-1 block w-full" 
                         value={data.name}  
@@ -80,11 +96,11 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                 </div>
                 <div className="mt-8">
                     <InputLabel htmlFor="description" value="Description" />
-                    <TextInput 
+                    <EditTextInput 
                         id="description" 
                         className="mt-1 block w-full" 
                         value={data.description} 
-                        onChange={(e) => setData("description", e.target.value)}  // Allow editing
+                        onChange={(e) => setData("description", e.target.value)}  
                     />
                     <InputError className="mt-2" message={errors.description} />
                 </div>
