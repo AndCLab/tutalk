@@ -14,13 +14,16 @@ import { Popover, Transition } from '@headlessui/react';
 import { isAudio, isImage } from "@/helpers";
 import AttachmentPreview from "./AttachmentPreview";
 import CustomAudioPlayer from "./CustomAudioPlayer";
-import { BeatLoader } from 'react-spinners'; // Import BeatLoader
+import { BeatLoader } from 'react-spinners'; 
+import { useEventBus } from "@/EventBus";
 
 const MessageInput = ({ conversation = null }) => {
     const [newMessage, setNewMessage] = useState("");
     const [inputErrorMessage, setInputErrorMessage] = useState("");
     const [messageSending, setMessageSending] = useState(false);
     const [chosenFiles, setChosenFiles] = useState([]);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const { emit } = useEventBus();
 
     const onFileChange = (ev) => {
         const files = ev.target.files;
@@ -40,39 +43,60 @@ const MessageInput = ({ conversation = null }) => {
         if (messageSending) {
             return;
         }
-
+    
         if (newMessage.trim() === "" && chosenFiles.length === 0) {
-            setInputErrorMessage("Message cannot be empty.");
-            setTimeout(() => {
-                setInputErrorMessage("");
-            }, 3000)
+            emit('toast.show', "Message cannot be empty.");
             return;
         }
+        
         const formData = new FormData();
         chosenFiles.forEach((file) => {
             formData.append("attachments[]", file.file);
         });
         formData.append("message", newMessage);
+        
         if (conversation.is_user) {
             formData.append("receiver_id", conversation.id);
         } else if (conversation.is_group) {
             formData.append("group_id", conversation.id);  
-        } 
+        }
+    
+        const hasAttachments = chosenFiles.length > 0; // Check for attachments
         setMessageSending(true);
-        axios.post(route("message.store"), formData)
-            .then((response) => {
-                setNewMessage("");
-                setMessageSending(false);
-                setChosenFiles([]);
-            })
-            .catch((error) => {
-                console.error('Axios error:', error.response.data);
-                setMessageSending(false);
-                setChosenFiles([]);
-                const message = error?.response?.data?.message;
-                setInputErrorMessage(message || "An error occurred while sending the message");
-            });
-    };
+    
+        // Only show the upload progress toast if there are attachments
+        if (hasAttachments) {
+            emit('toast.show', "Uploading your attachments...");
+        }
+    
+        axios.post(route("message.store"), formData, {
+            onUploadProgress: (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setUploadProgress(percentCompleted); // Update local state
+    
+                // Emit progress, only if there are attachments
+                if (hasAttachments) {
+                    emit('toast.uploadProgress', {
+                        message: `Upload Progress: ${percentCompleted}%`,
+                        uuid: 'upload-progress-toast',  // Fixed UUID for upload progress
+                    });
+                }
+            }
+        })
+        .then((response) => {
+            setNewMessage("");
+            setMessageSending(false);
+            setChosenFiles([]);
+            emit('toast.show', "Message sent successfully!");  // Emit success toast
+        })
+        .catch((error) => {
+            setMessageSending(false);
+            setChosenFiles([]);
+            const message = error?.response?.data?.message || "An error occurred while sending the message";
+            emit('toast.show', message);
+        });
+    }
+    
 
     const onLikeClick = () => {
         if(messageSending) {

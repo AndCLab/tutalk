@@ -70,7 +70,7 @@ const ChatLayout = ({ children }) => {
             setLocalConversations((oldConversations) => {
                 return oldConversations.filter((con) => con.id != id);
             });
-            // emit('toast.show', `Group ${name} was deleted`);
+            emit('toast.show', `Group ${name} was deleted`);
             if (!selectedConversation || selectedConversation.is_group && selectedConversation.id == id) {
                 console.log("Conversation no longer exists, Redirecting to index...");
                 router.visit(route("dashboard"));
